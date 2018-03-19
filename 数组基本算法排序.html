@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<input type="text" id="input"/>
+<span>用逗号隔开</span>
+<div id="btn">
+    <button id="bubble">冒泡</button>
+    <button id="quick">快速</button>
+    <button id="insert">插入</button>
+    <button id="select">选择</button>
+</div>
+<div id="output"></div>
+<script>
+    const input=document.getElementById('input'),
+            output=document.getElementById('output'),
+            btn=document.getElementById('btn');
+    btn.addEventListener('click', e=>{
+        let ev=e||window.event,
+                target= ev.target|| ev.srcElement,
+                arr=input.value?input.value.split(','):(function () {
+                    let newArr=[];
+                    for (var i = 0; i < 100; i++) {
+                        newArr[i] = (Math.round(Math.random() * 100));
+                    }
+                    return newArr;
+                })();
+        switch (target.id){
+            case 'bubble':
+                output.innerHTML=bubble(arr);
+                break;
+            case 'quick':
+                output.innerHTML= quick(arr);
+                break;
+            case 'insert':
+                output.innerHTML=insert(arr);
+                break;
+            case 'select':
+                output.innerHTML=select(arr);
+                break;
+            default :
+                break;
+        }
+    });
+    function bubble(arr) {
+        console.log('bubble开始:'+new Date().getMilliseconds());
+        for (var i = 0; i < arr.length - 1; i++) {//比较arr.length-1轮
+            for(var j=i+1;j<arr.length;j++){
+                if(arr[j]<arr[i]){
+                    var temp;
+                    temp=arr[j];
+                    arr[j]=arr[i];
+                    arr[i]=temp;
+                }
+            }
+        }
+        console.log('bubble结束:'+new Date().getMilliseconds());
+        return arr;
+    }
+    function quick(arr) {
+        console.log('quick开始:'+new Date().getMilliseconds());
+        if (arr.length <= 1) {
+            console.log('quick结束:'+new Date().getMilliseconds());
+            return arr;
+        } else {
+            var index = Math.floor(arr.length / 2),
+                len = arr.splice(index, 1),
+                left = [],
+                right = [];
+
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] < len) {
+                    left.push(arr[i]);
+                } else {
+                    right.push(arr[i]);
+                }
+            }
+            return quick(left).concat(len, quick(right));
+        }
+    }
+    function select(arr) {
+        console.log('select开始:'+new Date().getMilliseconds());
+        for(var i=0;i<arr.length;i++){
+            var min=arr[i],
+                index=i;
+            for(var j=i+1;j<arr.length;j++){
+                if(min>arr[j]){
+                    min=arr[j];
+                    index=j;
+                }
+            }
+            if(i!=index){
+                var temp;
+                temp=arr[index];
+                arr[index]=arr[i];
+                arr[i]=temp;
+            }
+        }
+        console.log('select结束:'+new Date().getMilliseconds());
+        return arr;
+    }
+    function insert(arr) {
+        console.log('insert开始:'+new Date().getMilliseconds());
+        for (var i = 0; i < arr.length - 1; i++) {
+            var insert = arr[i + 1];
+            var index = i+1;
+            for(var j=i;j>=0;j--){
+                if(insert > arr[j]){
+                    arr[j+1] = arr[j];
+                    index = j;
+                }
+            }
+            arr[index] = insert;
+        }
+        console.log('insert结束:'+new Date().getMilliseconds());
+        return arr.reverse();
+    }
+
+</script>
+</body>
+</html>

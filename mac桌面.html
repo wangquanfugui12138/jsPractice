@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style type="text/css">
+        body{margin:0;padding:0}
+        .container{position:fixed;width:100%;bottom:0;text-align:center}
+        .container>img{cursor: pointer}
+    </style>
+</head>
+<body>
+<div class="container">
+    <img src="img/1.png" />
+    <img src="img/2.png" />
+    <img src="img/3.png" />
+    <img src="img/4.png" />
+    <img src="img/5.png" />
+</div>
+<script>
+    (function () {
+       const container = document.getElementsByClassName('container')[0],
+               imgs = container.getElementsByTagName("img"),
+               preWidth = [];
+
+        //保存原宽度, 并设置当前宽度
+        for (let i = 0; i < imgs.length; i++)
+        {
+            preWidth.push(imgs[i].offsetWidth);
+            imgs[i].width = parseInt(imgs[i].offsetWidth / 2);
+        }
+        //鼠标移动事件
+        document.onmousemove = function (ev)
+        {
+            let e = ev || window.event;
+            for (let i = 0; i < imgs.length; i++)
+            {
+                let x = e.clientX - imgs[i].offsetLeft - imgs[i].offsetWidth / 2,
+                        y = e.clientY - imgs[i].offsetTop - container.offsetTop - imgs[i].offsetHeight / 2,
+                        scale = 1 - Math.sqrt(x * x + y * y) / 300;
+                if (scale < 0.5) scale = 0.5;
+                imgs[i].width = preWidth[i] * scale;
+            }
+        };
+    })();
+</script>
+</body>
+</html>

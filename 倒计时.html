@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        body,div{margin:0;padding:0;}
+        body{color:#fff;font:16px/1.5 \5fae\8f6f\96c5\9ed1;}
+        #countdown{width:300px;text-align:center;background:#1a1a1a;margin:10px auto;padding:20px 0;}
+        input[type='button']{border:0;width:283px;height:50px;cursor:pointer;margin-top:20px;background:url(img/btn.png) no-repeat;}
+        input[type='button']:focus{outline: none}
+        input[type='button'].cancel{background-position:0 -50px}
+        input[type='text']{color:#000;width:50px;line-height:2;background:#fbfbfb;border:2px solid #b4b4b4;margin:0 10px;padding:0 10px;}
+    </style>
+</head>
+<body>
+<div id="countdown">
+    <input type="text" value="1">分
+    <input type="text" value="40"/>秒
+    <input type="button" value="" class="">
+</div>
+<script>
+    const min=document.getElementsByTagName('input')[0],
+            sec=document.getElementsByTagName('input')[1],
+            btn=document.getElementsByTagName('input')[2];
+    (function(){
+        if(window.addEventListener){
+            btn.addEventListener('click', function () {
+                this.className == "" ?(timer=setInterval(update,1000),update(),min.setAttribute('disabled',true),
+                        sec.setAttribute('disabled',true)) : (clearInterval(timer),min.removeAttribute('disabled'),
+                        sec.removeAttribute('disabled'));
+                this.className = this.className == '' ? "cancel" : '';
+            })
+        }else if(window.attachEvent){
+            btn.attachEvent('click', function () {
+                this.className == "" ? (timer=setInterval(update,1000),update(),min.setAttribute('disabled',true),
+                        sec.setAttribute('disabled',true)) : (clearInterval(timer),min.removeAttribute('disabled'),
+                        sec.removeAttribute('disabled'));
+                this.className = this.className == '' ? "cancel" : '';
+            })
+        }
+    })();
+    function update(){
+        let total=min.value*60+sec.value*1;
+
+        if(total>0){
+            total--;
+            min.value=Math.floor(total/60);
+            sec.value=total%60;
+        }else{
+         alert('倒计时结束!');
+            clearInterval(timer);
+        }
+    }
+
+</script>
+</body>
+</html>
