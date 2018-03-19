@@ -37,25 +37,25 @@
             invert=document.getElementsByTagName('dt')[0].getElementsByTagName('a')[0];
     (function(){
         if(window.addEventListener){
-            input[0].addEventListener('click',  ()=> {
+            input[0].addEventListener('click',  function() {
                 this.parentNode.children[1].innerHTML=this.checked?'全不选':'全选';
                 for(let i=1;i< input.length;i++){
                     input[i].checked=this.checked;
                 }
             });
-            invert.addEventListener('click', ()=>{
+            invert.addEventListener('click', function() {
                 for(let i=1;i< input.length;i++){
                     input[i].checked=!input[i].checked;
                 }
             });
         }else if(window.attachEvent){
-            input[0].attachEvent('click', ()=>{
+            input[0].attachEvent('click', function() {
                 this.parentNode.children[1].innerHTML=this.checked?'全不选':'全选';
                 for(let i=1;i< input.length;i++){
                     input[i].checked=this.checked;
                 }
             });
-            invert.attachEvent('click', ()=>{
+            invert.attachEvent('click', function() {
                 for(let i=1;i< input.length;i++){
                     input[i].checked=!input[i].checked;
                 }
