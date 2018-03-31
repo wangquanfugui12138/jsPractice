@@ -19,3 +19,5 @@
 * [知乎导航条效果](https://wangquanfugui12138.github.io/jsPractice/知乎导航条效果.html)
 
 * [自定义表格随机数字随机颜色](https://wangquanfugui12138.github.io/jsPractice/自定义表格随机数字随机颜色.html)
+
+* [仿星巴克响应式导航](https://wangquanfugui12138.github.io/jsPractice/dist/index.html)
