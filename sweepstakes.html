@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>sweepstakes</title>
+</head>
+<style>
+    .wrapper{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        width: 200px;
+        height: 50px;
+        box-shadow: 0 0 15px 2px silver inset;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: 50px;
+        overflow: hidden;
+    }
+    .wrapper ul{
+        margin: 0;
+        padding: 0;
+        height: 50px;
+    }
+    .wrapper ul li{
+        list-style: none;
+        font-size: 20px;
+        font-weight: 700;
+        transition: all .3s linear;
+    }
+    .btn{
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        padding: 10px 15px;
+        border: 0;
+        background: white;
+        box-shadow: 0 0 3px;
+        cursor: pointer;
+    }
+    .btn:focus {outline: none;}
+</style>
+<body>
+<div class="wrapper">
+    <ul></ul>
+</div>
+<button class="btn">开始</button>
+<script>
+    const ul=document.getElementsByTagName('ul')[0],
+        btn=document.getElementsByClassName('btn')[0],
+        candidates=['小明','小王','小刚','小李','小张','小红'];
+    let timer, //计时器
+        list=[];//存放获奖者
+    //开始抽奖
+    function start(arr) {
+            timer=setInterval(() => {
+                let li=document.createElement('li'),
+                    index=Math.floor(Math.random()*arr.length);
+                ul.childNodes[0]?ul.removeChild(ul.childNodes[0]):'';
+                ul.appendChild(li);
+                li.innerHTML=arr[index];
+            },100);
+    }
+    //停止抽奖
+    function stop(arr) {
+        clearInterval(timer);
+        list.push(ul.firstChild.innerHTML);
+        arr.forEach((item,index)=>{
+            item===ul.firstChild.innerHTML?arr.splice(index,1):'';
+        });
+        let len=list.length,
+            pList=document.getElementsByTagName('p');
+        while(pList.length!==0){
+            document.body.removeChild(pList[0])
+        }
+        if(len>1){
+            for(let i=0;i<len;i++){
+                let p=document.createElement('p');
+                document.body.appendChild(p);
+                p.innerHTML=list[i];
+            }
+            if(list.length===3){
+                btn.disabled=true;
+            }
+        }else {
+            let p=document.createElement('p');
+            document.body.appendChild(p);
+            p.innerHTML=list[0];
+        }
+    }
+    //抽奖点击事件
+    btn.onclick=function(){
+        if(this.innerHTML==='开始'){
+            this.innerHTML='停止';
+            start(candidates);
+        }else {
+            this.innerHTML='开始';
+            stop(candidates)
+        }
+    }
+</script>
+</body>
+</html>
