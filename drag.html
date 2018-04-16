@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        #con {
+            width: 400px;
+            height: 70px;
+            padding: 10px;
+            border: 1px solid #aaaaaa;
+            text-align: center;
+        }
+        p{
+            width: 400px;
+            padding: 10px;
+            margin-bottom: 5px;
+            border: 2px dashed #ccc;
+            background-color: #eee;
+            cursor: move;
+        }
+        p:hover{
+            border-color: #cad5eb;
+            background-color: #f0f3f9;
+        }
+        .like{
+            overflow-y: auto;
+            overflow-x: hidden;
+            position: absolute;
+            top: 8px;
+            left: 500px;
+            width: 450px;
+            height: 400px;
+            padding: 10px;
+            border: 1px solid #aaaaaa;
+        }
+        .recycle{
+            position: absolute;
+            left: 500px;
+            top: 440px;
+            width: 400px;
+            height: 50px;
+            padding: 10px;
+            border: 1px solid #aaaaaa;
+        }
+    </style>
+
+</head>
+<body>
+
+<div id="con" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="leave(event)">将需要上传的文件拖放至此</div>
+<div id="wrapper">
+    <p draggable="true">1</p>
+    <p draggable="true">2</p>
+    <p draggable="true">3</p>
+    <p draggable="true">4</p>
+    <p draggable="true">5</p>
+</div>
+<div class="like" ondrop="dropList(event)" ondragover="allowDropList(event)" ondragleave="leaveList(event)">将喜欢的列表拖拽至此</div>
+<div class="recycle" ondrop="removeList(event)" ondragover="event.preventDefault()" ondragleave="event.preventDefault()">将要删除的列表拖拽至此</div>
+<script type="text/javascript">
+    function allowDrop(e) {
+        e.preventDefault();
+        e.target.style.backgroundColor='silver';
+        e.target.style.color='white';
+    }
+    function leave(e) {
+        e.preventDefault();
+        e.target.style.backgroundColor='white'
+        e.target.style.color='black';
+    }
+    function drop(e) {
+        e.preventDefault();
+        console.log(e.dataTransfer.files);
+    }
+
+    function allowDropList(e) {
+        e.preventDefault();
+    }
+    function leaveList(e) {
+        e.preventDefault();
+    }
+    function dropList(e) {
+        e.preventDefault();
+        let item,list=document.getElementsByTagName('p');
+        for(let i=0;i<list.length;i++){
+            if(list[i].innerHTML===e.dataTransfer.getData('text')) item=list[i].cloneNode(true)
+        }
+        e.target.appendChild(item)
+    }
+    document.getElementById('wrapper').ondragstart=function (e) {
+        if(e.target.nodeName.toUpperCase()==='P'){
+            e.dataTransfer.effectAllowed = "move";
+            e.dataTransfer.setData("text", e.target.innerHTML);
+            e.dataTransfer.setDragImage(e.target, 0, 0);
+        }
+    };
+
+    document.getElementsByClassName('like')[0].ondragstart=function (e) {
+        if(e.target.nodeName.toUpperCase()==='P'){
+            e.dataTransfer.effectAllowed = "move";
+            e.dataTransfer.clearData();
+            e.dataTransfer.setData("Text", e.target.innerHTML);
+            e.dataTransfer.setDragImage(e.target, 0, 0);
+        }
+    };
+    function removeList(e) {
+        e.preventDefault();
+        let item,list=document.getElementsByClassName('like')[0].getElementsByTagName('p');
+        for(let i=0;i<list.length;i++){
+            if(list[i].innerHTML===e.dataTransfer.getData('Text')) item=list[i]
+        }
+        document.getElementsByClassName('like')[0].removeChild(item)
+    }
+</script>
+</body>
+</html>
