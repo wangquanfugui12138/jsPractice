@@ -23,3 +23,5 @@
 * [仿星巴克响应式导航](https://wangquanfugui12138.github.io/jsPractice/dist/index.html)
 
 * [模拟抽奖](https://wangquanfugui12138.github.io/jsPractice/sweepstakes.html)
+
+* [拖拽事件](https://wangquanfugui12138.github.io/jsPractice/drag.html)
