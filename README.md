@@ -1,4 +1,4 @@
-# jsPractice
+# js练习demo
 
 * [(原型法)轮播图](https://wangquanfugui12138.github.io/jsPractice/(原型法)轮播图.html)
 
