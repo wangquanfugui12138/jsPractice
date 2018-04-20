@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let startPoint = null; //起始点
+    document.addEventListener("touchstart",function(e){
+        let ev = e||window.event;
+        startPoint = ev.touches[0];
+    });
+    document.addEventListener("touchend",function(e){
+        let ev=e||window.event;
+
+        let endPoint = ev.changedTouches[0];
+        //计算终点与起点的差值
+        let x = endPoint.clientX - startPoint.clientX;
+        let y = endPoint.clientY - startPoint.clientY;
+        //设置滑动距离阈值
+        let d = 100;
+        if(Math.abs(x)>d){
+            if(x>0){
+                console.log("向右滑动");
+            }else{
+                console.log("向左滑动");
+            }
+        }
+        if(Math.abs(y)>d){
+            if(y>0){
+                console.log("向下滑动");
+            }else{
+                console.log("向上滑动");
+            }
+        }
+
+    })
+</script>
+</body>
+</html>
