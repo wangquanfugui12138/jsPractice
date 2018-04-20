@@ -25,3 +25,5 @@
 * [模拟抽奖](https://wangquanfugui12138.github.io/jsPractice/sweepstakes.html)
 
 * [拖拽事件](https://wangquanfugui12138.github.io/jsPractice/drag.html)
+
+* [原生js模拟手势](https://wangquanfugui12138.github.io/jsPractice/手势Test.html)   `ps:手机模式下打开console查看`
