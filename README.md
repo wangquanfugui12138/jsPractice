@@ -27,3 +27,5 @@
 * [拖拽事件](https://wangquanfugui12138.github.io/jsPractice/drag.html)
 
 * [原生js模拟上下左右滑动手势](https://wangquanfugui12138.github.io/jsPractice/手势Test.html) `ps:手机模式下查看`
+
+* [模拟红包算法](https://wangquanfugui12138.github.io/jsPractice/红包.html)
