@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>红包抽取</title>
+</head>
+<body>
+<label>输入金额<input type="number"></label>
+<label>输入人数<input type="number"></label>
+<button onclick="start()">开始抽奖</button>
+<script>
+    function start(){
+        let money=document.getElementsByTagName('input')[0].value||0,
+            people=document.getElementsByTagName('input')[1].value||0,
+            result=get(money,people);
+        alert(result);
+    }
+    function get(m,p) {
+        let  result=[],total=m,oldVal=0;
+        if(total < 0.01*p){
+            alert('请重新输入金额以保证每个红包内至少有0.01元');
+            return false
+        }
+        for(let i = 0 ; i < p ; i++ ){
+            total-=oldVal;
+            let rand=(Math.random()*((total/(p-i))*2)),per=0;
+            if(i===(p-1)){
+                per=Math.floor(total*100)/100;
+            }else {
+                per=Math.floor(rand*100)/100;
+                oldVal=per;
+            }
+            result.push('第'+(i+1)+'个红包：'+per);
+        }
+        return result
+    }
+</script>
+</body>
+</html>
