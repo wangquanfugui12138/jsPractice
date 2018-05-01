@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>弹幕</title>
+    <style>
+        .wrapper{
+            height: 500px;
+            width:100%;
+            background: silver;
+            display:flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .wrapper .content{
+            overflow: hidden;
+            width: 100%;
+            height: 90%;
+        }
+        .wrapper .content>span{
+            position: relative;
+            font-size: 20px;
+        }
+        .wrapper .input{
+            width: 100%;
+            height: 10%;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper" id="wrapper">
+        <div class="content" id="content"></div>
+        <div class="input">
+            <label>畅所欲言吧：<input type="text" id="text"></label>
+            <button id="btn">BiuBiuBiu</button>
+        </div>
+    </div>
+    <script src="jquery-3.2.1.min.js"></script>
+    <script>
+        $(function(){
+            let span,top,
+            width=parseInt($('#content').width()),
+            height=parseInt($('#content').height());
+
+            $('#btn').on('click',()=>{
+                span=$('<span></span>');
+                span.text($('#text').val());
+                top=Math.floor(Math.random()* height);
+                span.css({
+                    'top':top,
+                    'right':-(width+200)
+                });
+                $('#content').append(span);
+                console.log($('#content>span:last-child'));
+                $('#content>span:last-child').animate({'right':width+200},10000,function(){
+                    $(this).remove();
+                })
+            })
+        })
+    </script>
+</body>
+</html>
