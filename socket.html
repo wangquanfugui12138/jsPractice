@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        const socket = new WebSocket('ws://localhost:8080');
+        socket.onopen = function (event) {
+            socket.send('I am the client and I\'m listening!');
+            socket.onmessage = function (event) {
+                console.log('Client received a message', event);
+            };
+            socket.onclose = function (event) {
+                console.log('Client notified socket has closed', event);
+            };  
+        };
+    </script>
+</body>
+
+</html>
