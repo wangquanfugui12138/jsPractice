@@ -35,3 +35,5 @@
 * [socket-DEMO](https://wangquanfugui12138.github.io/jsPractice/socket.html)
 
 * [quickSort-deepClone](https://wangquanfugui12138.github.io/jsPractice/quickSort-deepClone.html)
+
+* [curry-partial](https://wangquanfugui12138.github.io/jsPractice/curry-partial.html)
