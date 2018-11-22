@@ -31,3 +31,7 @@
 * [模拟红包算法](https://wangquanfugui12138.github.io/jsPractice/红包.html)
 
 * [模拟弹幕效果](https://wangquanfugui12138.github.io/jsPractice/弹幕.html)
+
+* [socket-DEMO](https://wangquanfugui12138.github.io/jsPractice/socket.html)
+
+* [quickSort-deepClone](https://wangquanfugui12138.github.io/jsPractice/quickSort-deepClone.html)
