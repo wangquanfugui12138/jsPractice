@@ -37,3 +37,5 @@
 * [quickSort-deepClone](https://wangquanfugui12138.github.io/jsPractice/quickSort-deepClone.html)
 
 * [curry-partial-vertical](https://wangquanfugui12138.github.io/jsPractice/curry-partial.html)
+
+* [Promise](https://wangquanfugui12138.github.io/jsPractice/Promise.html)
