@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        //es6 简易Promise
+        class Promise {
+            constructor(fn) {
+                this.state = 'pending'
+                this.value = undefined
+                this.reason = undefined
+                // 成功方法数组
+                this.onResolvedCallbacks = []
+                // 失败方法数组
+                this.onRejectedCallbacks = []
+                let resolve = value => {
+                    if (this.state === 'pending') {
+                        this.state = 'fulfilled'
+                        this.value = value
+                        this.onResolvedCallbacks.forEach(cb => cb())
+                    }
+                }
+                let reject = reason => {
+                    if (this.state === 'pending') {
+                        this.state = 'rejected'
+                        this.reason = reason
+                        this.onRejectedCallbacks.forEach(cb => cb())
+                    }
+                }
+                try {
+                    fn(resolve, reject)
+                } catch (err) {
+                    reject(err)
+                }
+            }
+            then(onFulfilled, onRejected) {
+                if (this.state === 'fulfilled') {
+                    onFulfilled(this.value)
+                }
+                if (this.state === 'rejected') {
+                    onRejected(this.reason)
+                }
+                if (this.state === 'pending') {
+                    this.onResolvedCallbacks.push(() => {
+                        onFulfilled(this.value)
+                    })
+                    this.onRejectedCallbacks.push(() => {
+                        onRejected(this.reason)
+                    })
+                }
+            }
+        }
+
+        const p = function () {
+            return new Promise((res, rej) => {
+                setTimeout(() => {
+                    document.body.innerHTML = '<div style="color:red">Promise succeed!</div>'
+                    res('Promise succeed!')
+                }, 2000)
+            })
+        }
+        p().then(val => console.log(val))
+    </script>
+    <script>
+        //全数组排列
+        function permute1(input) {
+            var permArr = [],
+                usedChars = []
+            function main(input) {
+                var i, ch
+                for (i = 0; i < input.length; i++) {
+                    ch = input.splice(i, 1)[0]
+                    usedChars.push(ch)
+                    if (input.length == 0) {
+                        permArr.push(usedChars.slice())
+                    }
+
+                    main(input)
+                    input.splice(i, 0, ch)
+                    usedChars.pop()
+                }
+                return permArr
+            }
+            // debugger
+            return main(input)
+        }
+
+        function permute2(arr) {
+            if (arr.length == 1)
+                return arr
+            else if (arr.length == 2)
+                return [[arr[0], arr[1]], [arr[1], arr[0]]]
+            else {
+                var temp = []
+                for (var i = 0; i < arr.length; i++) {
+                    var save = arr[i]
+                    arr.splice(i, 1)//取出arr[i]
+                    // debugger
+                    var res = permute2(arr)//递归排列arr[0],arr[1],...,arr[i-1],arr[i+1],...,arr[n]
+                    arr.splice(i, 0, save)//将arr[j]放入数组，保持原来的位置
+                    for (var j = 0; j < res.length; j++) {
+                        res[j].push(arr[i])
+                        temp.push(res[j])//将arr[j]组合起来
+                    }
+                }
+                return temp
+            }
+        }
+        function permute3(arr) {
+            var arr = Array.from(arr),
+                result = []
+            
+            function main(index) {
+                if (index == arr.length - 1) {
+                    result.push(arr)
+                    return 
+                }
+                for (var i = index; i < arr.length; i++) {
+                    swap(arr, index, i)
+                    main(index + 1)
+                    swap(arr, index, i)
+                }
+                return result
+            }
+            function swap(array, i, j) {
+                [array[i],array[j]]=[array[j],array[i]]
+            }
+            return main(0) 
+        }
+
+        console.dir(permute1([5, 3, 7, 1]))
+        console.dir(permute2([5, 3, 7, 1]))
+        console.dir(permute3([5, 3, 7, 1]))
+    </script>
+</body>
+
+</html>
