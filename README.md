@@ -39,3 +39,5 @@
 * [curry-partial-vertical](https://wangquanfugui12138.github.io/jsPractice/curry-partial.html)
 
 * [Promise](https://wangquanfugui12138.github.io/jsPractice/Promise.html)
+
+* [数组全排列](https://wangquanfugui12138.github.io/jsPractice/algorithm.html)
