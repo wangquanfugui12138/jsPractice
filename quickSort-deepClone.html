@@ -35,7 +35,7 @@
                 (
                     result[key]=Object.assign({},obj[key]),
                     deepClone(obj[key],result[key])
-                ) : result[key]=Object.assign({},obj[key])
+                ) : result[key]=obj[key]
         })
         return result
     }
