@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        ; (function (undefined) {
+            "use strict"
+            var _global;
+            var plugin = {
+                add: function (n1, n2) { return n1 + n2; },//加
+                sub: function (n1, n2) { return n1 - n2; },//减
+                mul: function (n1, n2) { return n1 * n2; },//乘
+                div: function (n1, n2) { return n1 / n2; },//除
+                sur: function (n1, n2) { return n1 % n2; } //余
+            }
+            // 最后将插件对象暴露给全局对象
+            _global = (function () { return this || (0, eval)('this'); }());
+            if (typeof module !== "undefined" && module.exports) {
+                module.exports = plugin;
+            } else if (typeof define === "function" && define.amd) {
+                define(function () { return plugin; });
+            } else {
+                !('plugin' in _global) && (_global.plugin = plugin);
+            }
+        }());
+        with(plugin){
+            console.log(add(2,1)) // 3
+            console.log(sub(2,1)) // 1
+            console.log(mul(2,1)) // 2
+            console.log(div(2,1)) // 2
+            console.log(sur(2,1)) // 0
+        }
+    </script>
+</body>
+
+</html>

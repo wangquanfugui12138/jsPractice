@@ -41,6 +41,7 @@
             var max = 0, s1 = arg1.toString(), s2 = arg2.toString();
             try { max += s1.split(".")[1].length } catch (e) { }
             try { max += s2.split(".")[1].length } catch (e) { }
+            console.log(s1.split("."),s2.split("."),max)
             document.getElementById('result').innerText = `结果：${Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, max)}`
         }
         Number.prototype.mul = function (arg) {
@@ -52,6 +53,7 @@
             try { r1 = arg1.toString().split(".")[1].length } catch (e) { r1 = 0 }
             try { r2 = arg2.toString().split(".")[1].length } catch (e) { r2 = 0 }
             max = Math.pow(10, Math.max(r1, r2))
+            console.log(arg1.toString(),arg2.toString(),r1, r2,max)
             document.getElementById('result').innerText = `结果：${(arg1 * max + arg2 * max) / max}`
         }
         Number.prototype.add = function (arg) {
