@@ -42,4 +42,4 @@
 
 * [数组全排列](https://wangquanfugui12138.github.io/jsPractice/algorithm.html)
 
-* [高精度加减乘除](https://wangquanfugui12138.github.io/jsPractice/高精度加减乘除(超出JS数字最大值).html)
+* [高精度加减乘除](https://wangquanfugui12138.github.io/jsPractice/高精度加减乘除.html)
