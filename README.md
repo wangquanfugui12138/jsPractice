@@ -1,4 +1,4 @@
-# 原生demo
+# demo
 
 * [(原型法)轮播图](https://wangquanfugui12138.github.io/jsPractice/(原型法)轮播图.html)
 
@@ -43,3 +43,5 @@
 * [数组全排列](https://wangquanfugui12138.github.io/jsPractice/algorithm.html)
 
 * [高精度加减乘除](https://wangquanfugui12138.github.io/jsPractice/高精度加减乘除.html)
+
+* [原生组件](https://wangquanfugui12138.github.io/jsPractice/原生组件规范写法.html)
