@@ -20,14 +20,14 @@
             btn=document.getElementById('btn');
     btn.addEventListener('click', e=>{
         let ev=e||window.event,
-                target= ev.target|| ev.srcElement,
-                arr=input.value?input.value.split(','):(function () {
-                    let newArr=[];
-                    for (var i = 0; i < 100; i++) {
-                        newArr[i] = (Math.round(Math.random() * 100));
-                    }
-                    return newArr;
-                })();
+            target= ev.target|| ev.srcElement,
+            arr=input.value?input.value.split(','):(function () {
+                let newArr=[];
+                for (var i = 0; i < 100; i++) {
+                    newArr[i] = (Math.round(Math.random() * 100));
+                }
+                return newArr;
+            })();
         switch (target.id){
             case 'bubble':
                 output.innerHTML=bubble(arr);

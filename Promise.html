@@ -78,12 +78,71 @@
                 }, 2000)
             })
         }
-        function test(){
-            const r = p().then(r=>console.log(r))
-            
+        function test() {
+            const r = p().then(r => console.log(r))
+
         }
         test()
         console.log('hahahhahahahah')
+    </script>
+    <script>
+        //es6 简易Promise
+        class Promise {
+            constructor(fn) {
+                this.state = 'pending'
+                this.value = undefined
+                this.reason = undefined
+                // 成功方法数组
+                this.onResolvedCallbacks = []
+                // 失败方法数组
+                this.onRejectedCallbacks = []
+                let resolve = value => {
+                    if (this.state === 'pending') {
+                        this.state = 'fulfilled'
+                        this.value = value
+                        this.onResolvedCallbacks.forEach(cb => cb())
+                    }
+                }
+                let reject = reason => {
+                    if (this.state === 'pending') {
+                        this.state = 'rejected'
+                        this.reason = reason
+                        this.onRejectedCallbacks.forEach(cb => cb())
+                    }
+                }
+                try {
+                    fn(resolve, reject)
+                } catch (err) {
+                    reject(err)
+                }
+            }
+            then(onFulfilled, onRejected) {
+                if (this.state === 'fulfilled') {
+                    onFulfilled(this.value)
+                }
+                if (this.state === 'rejected') {
+                    onRejected(this.reason)
+                }
+                if (this.state === 'pending') {
+                    this.onResolvedCallbacks.push(() => {
+                        onFulfilled(this.value)
+                    })
+                    this.onRejectedCallbacks.push(() => {
+                        onRejected(this.reason)
+                    })
+                }
+            }
+        }
+
+        const p = function () {
+            return new Promise((res, rej) => {
+                setTimeout(() => {
+                    document.body.innerHTML = '<div style="color:red">Promise succeed!</div>'
+                    res('Promise succeed!')
+                }, 2000)
+            })
+        }
+        p().then(val => console.log(val))
     </script>
 </body>
 

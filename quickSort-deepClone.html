@@ -21,14 +21,7 @@
         return quickSort(left).concat(mid_value,quickSort(right))
     }
     console.log(quickSort([9,5,7,5,1,5,12]))
-    var a={
-        b:{
-            c:{
-                d:1
-            }
-        }
-    }
-    var aa={}
+    
     function deepClone(obj,result){
         Object.keys(obj).forEach(key=>{
             Object.prototype.toString.call(obj[key])==='[object Object]'?
@@ -39,9 +32,18 @@
         })
         return result
     }
+    var a={
+        b:{
+            c:1              
+        },
+        ex:/[0-9]{1}\|[a-z]*?/g,
+        fn:()=>console.log('123'),
+        m:Symbol('new')
+    }
+    var aa={}
     deepClone(a,aa)
     console.log(a,aa)
-    aa.b.c.d=2
+    a.b.c=2
     console.log(a,aa)
 </script>
 </html>
