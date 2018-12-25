@@ -26,7 +26,7 @@
 
 * [拖拽事件](https://wangquanfugui12138.github.io/jsPractice/drag.html)
 
-* [原生js模拟上下左右滑动手势](https://wangquanfugui12138.github.io/jsPractice/手势Test.html) `ps:手机模式下查看console`
+* [原生js模拟上下左右滑动手势](https://wangquanfugui12138.github.io/jsPractice/手势Test.html) 
 
 * [模拟红包算法](https://wangquanfugui12138.github.io/jsPractice/红包.html)
 
@@ -34,10 +34,12 @@
 
 * [socket-DEMO](https://wangquanfugui12138.github.io/jsPractice/socket.html)
 
-* [quickSort-deepClone](https://wangquanfugui12138.github.io/jsPractice/quickSort-deepClone.html)
+* [deepClone](https://wangquanfugui12138.github.io/jsPractice/quickSort-deepClone.html)
 
 * [curry-partial-vertical](https://wangquanfugui12138.github.io/jsPractice/curry-partial.html)
 
-* [Promise](https://wangquanfugui12138.github.io/jsPractice/Promise.html)
+* [es5/es6简易Promise](https://wangquanfugui12138.github.io/jsPractice/Promise.html)
 
 * [数组全排列](https://wangquanfugui12138.github.io/jsPractice/algorithm.html)
+
+* [高精度加减乘除](https://wangquanfugui12138.github.io/jsPractice/高精度加减乘除(超出JS数字最大值).html)
