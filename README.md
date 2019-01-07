@@ -45,3 +45,7 @@
 * [高精度加减乘除](https://wangquanfugui12138.github.io/jsPractice/高精度加减乘除.html)
 
 * [原生组件](https://wangquanfugui12138.github.io/jsPractice/原生组件规范写法.html)
+
+* [bind、call、apply](https://wangquanfugui12138.github.io/jsPractice/bind、call、apply实现.html)
+
+* [二分查找](https://wangquanfugui12138.github.io/jsPractice/二分查找.html)
