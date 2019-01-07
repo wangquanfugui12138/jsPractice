@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id='arr'>
+    <button id='bubble'>冒泡</button>
+    <button id='quick'>快排</button>
+    <button id='inner'>插入</button>
+    <button id='select'>选择</button>
+    <p id='res'></p>
+    <script>
+        var input = document.getElementById('arr'),
+            res = document.getElementById('res')
+
+        var actions = (function(){
+            function innsert(text){
+                res.innerText=text.join('')
+            }
+            function swap(arr,i,j){
+                [arr[i],arr[j]]=[arr[j],arr[i]]
+            }
+            function bubble(arr){ 
+                var len=arr.length   
+
+                for(var i=0;i<len;i++){
+                    for(var j=i+1;j<len;j++){
+                        arr[i]>arr[j] && swap(arr,i,j)
+                    }
+                }
+                innsert(arr)
+            }
+            function quick(arr){
+                if(arr.length <= 1){
+                    innsert(arr)
+                }else{
+                    var index = Math.floor(arr.length/2),
+                    mid = arr.splice(index,1),
+                    left = [],right =[]
+                    
+                    for(var i=0;i<arr.length;i++){
+                        arr[i]<mid ? left.push(arr[i]) : right.push(arr[i])
+                    }
+                }
+                return quick(left).concat(mid,quick(right))
+            }
+            function inner(arr){
+                for(var i=1,len=arr.length;i<len;i++){
+                    var tmp = arr[i]
+                    
+                    for(var j=i;j>0;j--){
+                        arr[j] < arr[j-1] && swap(arr,j,j-1)
+                    }
+                    
+                }
+                innsert(arr)
+            }
+            function select(arr){
+                for(var i=0,len=arr.length;i<len;i++){
+                    var min=arr[i],minIndex = i
+                    for(var j=i+1;j<len;j++){
+                        arr[j]<min && (minIndex = j,min=arr[j])
+                    }
+                    minIndex!=i && swap(arr,minIndex,i)
+                }
+                innsert(arr)
+            }
+            return {
+                bubble,
+                quick,
+                inner,
+                select
+            }
+        }()) 
+
+        bubble.onclick=function(){
+            var arr = input.value.split('')
+            actions.bubble(arr)
+        }
+        quick.onclick=function(){
+            var arr = input.value.split('')
+            actions.bubble(arr)
+        }
+        inner.onclick=function(){
+            var arr = input.value.split('')
+            actions.inner(arr)
+        }
+        select.onclick=function(){
+            var arr = input.value.split('')
+            actions.select(arr)
+        }
+    </script>
+</body>
+</html>

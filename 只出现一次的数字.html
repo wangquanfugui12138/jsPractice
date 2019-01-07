@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /** 
+          * 给定一个非空整数数组，除了某个元素只出现一次以外，其余每个元素均出现两次。找出那个只出现了一次的元素
+          */
+        function onceNum(nums) {
+            for (let i = 1; i < nums.length; i++) {
+                nums[0] ^= nums[i];//异或运算数组内相等的两项异或结果为0
+            }
+            return nums[0];
+        };
+
+        console.log(onceNum([2,4,2, 1,8, 4, 5,1, 5]));
+    </script>
+</body>
+</html>

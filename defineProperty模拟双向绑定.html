@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id='input'>
+    <button id='btn'>random</button>
+    <span id='res'></span>
+    <script>
+        var data = {text:'123'},
+            input = document.getElementById('input'),
+            btn = document.getElementById('btn'),
+            res = document.getElementById('res')
+
+        Object.defineProperty(data, 'text', {
+            set(value) {
+                input.value = value
+                this.value = value
+                res.innerText = this.value
+            }
+        })
+
+        input.oninput = e => {
+            data.text = e.target.value
+        }
+        btn.onclick = () => {
+            data.text = Math.floor(Math.random()*100)
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //-转驼峰
+        function str2Camel(sName){
+            var tmp = sName.replace(/(^-*)|(-*$)/g,"")
+            var result = tmp.replace(/\-[a-z]/g , function(item, index,arr){
+                return item.replace('-','').toUpperCase()
+            })
+            console.log(result)
+            return result
+        }
+        str2Camel('-x-man-')
+        //连续多个相同字符
+        function matchMore(str){
+            var result = /([a-zA-Z])\1+/g.test(str)
+            console.log(result)
+            return result
+        }
+        matchMore('y2tt7y')
+    </script>
+</body>
+</html>
