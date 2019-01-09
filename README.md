@@ -49,3 +49,5 @@
 * [bind、call、apply](https://wangquanfugui12138.github.io/jsPractice/bind、call、apply实现.html)
 
 * [二分查找](https://wangquanfugui12138.github.io/jsPractice/二分查找.html)
+
+* [大数相加](https://wangquanfugui12138.github.io/jsPractice/大数相加.html)
