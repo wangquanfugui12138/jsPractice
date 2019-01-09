@@ -12,8 +12,12 @@
     <script>
         function New(obj) {
             var tmp = {}
+
             tmp.__proto__ = obj.prototype
-            return tmp
+ 
+            var result = obj.apply(tmp, [...arguments])
+            // 确保 new 出来的是个对象
+            return typeof result === 'object' ? result : tmp
         }
         //bind
         Function.prototype._bind = function (ctx) {
@@ -24,7 +28,7 @@
                     return _this.apply(ctx || window, preArgs.concat(Array.prototype.slice.call(arguments)))
                 }
 
-            Fn.prototype = _this.prototype
+            Fn.prototype = this.prototype
             main.prototype = New(Fn)
             return main
         }

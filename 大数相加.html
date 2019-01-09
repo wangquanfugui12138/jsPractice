@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id='a'>
+    <input type="text" id='b'>
+    <button id='plusC'>普通相加</button>
+    <button id='plusB'>大数相加</button>
+    <p id='resC'></p>
+    <p id='resB'></p>
+    <script>
+        plusB.onclick = function () {
+            var result = sumBigNumber(a.value, b.value)
+            resC.innerHTML = result
+        }
+        plusC.onclick = function () {
+            var result = +a.value + +b.value
+            resB.innerHTML = result
+        }
+        function sumBigNumber(a, b) {
+            var res = '', tmp = 0
+
+            a = a.split('')
+            b = b.split('')
+
+            while (a.length || b.length || tmp) {
+                tmp += ~~a.pop() + ~~b.pop()//1 ~~操作符 true转为1 false转为0 字符串中带了其他字母，符号，或者其他除数字外的东西一律输出0 '0.3'输出0,'3.3'输出3
+                res = (tmp % 10) + res //2 用字符串保存每一次加后的结果
+                tmp = tmp > 9//3 判断是否大于9 true在第1步转为1代表进位 false转为0代表未进位
+            }
+            return res.replace(/^0+/, '')
+        }
+        sumBigNumber('3782647863278468012934670', '23784678091370408971329048718239749083')
+    </script>
+    <script>
+        async function async1() {
+            console.log('async1 start');
+            await async2();
+            console.log('async1 end');
+        }
+
+        async function async2() {
+            console.log('async2');
+        }
+
+        console.log('script start');
+
+        setTimeout(function () {
+            console.log('setTimeout');
+        }, 0);
+
+        async1();
+
+        new Promise(function (resolve) {
+            console.log('promise1');
+            resolve();
+        }).then(function () {
+            console.log('promise2');
+        });
+
+        console.log('script end');
+    </script>
+</body>
+
+</html>
