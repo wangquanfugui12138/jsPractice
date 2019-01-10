@@ -51,3 +51,5 @@
 * [二分查找](https://wangquanfugui12138.github.io/jsPractice/二分查找.html)
 
 * [大数相加](https://wangquanfugui12138.github.io/jsPractice/大数相加.html)
+
+* [占位符交互效果（源自张鑫旭博客）](https://wangquanfugui12138.github.io/jsPractice/占位符交互效果.html)
