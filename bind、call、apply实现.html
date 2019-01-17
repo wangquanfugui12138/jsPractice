@@ -39,18 +39,18 @@
             var ctx = ctx || window
             ctx.fn = this
 
-            var args = []
+            var args = []   
             for (var i = 1, len = arguments.length; i < len; i++) {
                 args.push('arguments[' + i + ']')
             }
-
+            
             var result = eval('ctx.fn(' + args + ')')
 
             delete ctx.fn
             return result
         }
-        var aa = function (xx) { console.log(this.a,xx) }
-        aa._call({ a: 'call' },'callArg')
+        var aa = function () { console.log(this.a,arguments) }
+        aa._call({ a: 'call' },'callArg','callArg1')
         //apply
         Function.prototype._apply = function (ctx,arr) {
             var ctx = ctx || window
@@ -71,8 +71,8 @@
             delete ctx.fn
             return result
         }
-        var aaa = function (arr) { console.log(this.a,arr) }
-        aaa._apply({ a: 'apply' },['applyArg'])
+        var aaa = function () { console.log(this.a,arguments) }
+        aaa._apply({ a: 'apply' },['applyArg','applyArg1'])
     </script>
 </body>
 

@@ -11,25 +11,27 @@
     <input type="text" id="input" /> <button id="btn">random</button>
     <span id="res"></span>
     <script>
-      var data = { text: '123' },
+      var data = {},
         input = document.getElementById('input'),
         btn = document.getElementById('btn'),
         res = document.getElementById('res')
 
-      Object.defineProperty(data, 'text', {
-        set(value) {
-          input.value = value
-          res.innerText = value
+      var dataProxy = new Proxy(data, {
+        set(target, prop, newValue) {
+          //target：data对象,prop：修改的属性值,newValue：传入的参数值
+          if (prop === 'text') {
+            target[prop] = newValue
+            res.innerHTML = newValue
+            return true
+          } else return false
         }
       })
 
       input.oninput = e => {
-        data.text = e.target.value
-        console.log(data)
+        dataProxy.text = e.target.value
       }
       btn.onclick = () => {
-        data.text = Math.floor(Math.random() * 100)
-        console.log(data)
+        dataProxy.text = Math.floor(Math.random() * 100)
       }
     </script>
   </body>
