@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body style="height:1500px">
+    <button id="Closure">closure</button>
+    <button id="Property">property</button>
+    <button id="Debounce">debounce</button>
+    <script>
+      function scrollFnC() {
+        console.log('closure')
+      }
+      function scrollFnP() {
+        console.log('property')
+      }
+      function scrollFn() {
+        console.log('debounce')
+      }
+      function debounceC(fn, delay) {
+        var timer = null
+        return function() {
+          var self = this
+          clearTimeout(timer)
+          timer = setTimeout(function() {
+            fn.call(self)
+          }, delay)
+        }
+      }
+      function debounceP(fn, delay) {
+        return function() {
+          var self = this,
+            args = Array.prototype.slice.call(arguments)
+          clearTimeout(fn.timer)
+          fn.timer = setTimeout(function() {
+            fn.apply(self, args)
+          }, delay)
+        }
+      }
+      function throttle(fn, delay) {
+        var timer = null,
+          startTime = +new Date()
+        return function() {
+          var self = this,
+            args = Array.prototype.slice.call(arguments),
+            curTime = +new Date()
+
+          clearTimeout(timer)
+          if (curTime - startTime > delay) {
+            fn.apply(self, args)
+            startTime = curTime
+          } else {
+            // 没达到触发间隔，重新设定定时器
+            timer = setTimeout(function() {
+              fn.apply(self, args)
+            }, delay)
+          }
+        }
+      }
+      Closure.onclick = function() {
+        window.onscroll = null
+        window.onscroll = debounceC(scrollFnC, 500)
+      }
+      Property.onclick = function() {
+        window.onscroll = null
+        window.onscroll = debounceP(scrollFnP, 500)
+      }
+      Debounce.onclick = function() {
+        window.onscroll = null
+        window.onscroll = throttle(scrollFn, 1000)
+      }
+    </script>
+  </body>
+</html>
