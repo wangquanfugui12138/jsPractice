@@ -30,6 +30,7 @@
 
       input.oninput = e => {
         dataProxy.text = e.target.value
+        console.log(data)
       }
       btn.onclick = () => {
         dataProxy.text = Math.floor(Math.random() * 100)

@@ -23,10 +23,11 @@
       function debounceC(fn, delay) {
         var timer = null
         return function() {
-          var self = this
+          var self = this,
+            args = Array.prototype.slice.call(arguments)
           clearTimeout(timer)
           timer = setTimeout(function() {
-            fn.call(self)
+            fn.apply(self, args)
           }, delay)
         }
       }

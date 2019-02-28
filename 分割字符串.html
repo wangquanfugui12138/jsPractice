@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <P contenteditable="true" id="input" style="border:1px solid lime"></P>
+    <button id="btn">分割</button>
+    <p id="res"></p>
+    <script>
+      var val = `ab  w d;fqw ~~~
+      sad wxx sawq:q 1ju2
+      xgew 55: "asd"  'sa'`
+
+      input.oninput = function(e) {
+        val = e.target.innerText
+      }
+      btn.onclick = function() {
+        var arr = val
+          .replace(/\n/g, ' ')
+          .split(' ')
+          .filter(item => !!item)
+          .reduce((sum, cur, index) => {
+            var ind = Math.floor(index / 4)
+            !sum[ind] && (sum[ind] = [])
+            sum[ind].push(cur)
+            return sum
+          }, [])
+        console.log(arr)
+        res.innerText = arr
+      }
+    </script>
+  </body>
+</html>

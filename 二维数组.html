@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+
+  <body>
+    <script>
+      //方法一
+      function matrix1(n) {
+        var matrix = Array.from({ length: n }, function() {
+          return []
+        })
+        var num = 1,
+          rowbegin = 0,
+          rowend = n - 1,
+          colbegin = 0,
+          colend = n - 1
+        while (rowbegin <= rowend && colbegin <= colend) {
+          for (var i = colbegin; i <= colend; i++) matrix[rowbegin][i] = num++
+          rowbegin++
+
+          for (var i = rowbegin; i <= rowend; i++) matrix[i][colend] = num++
+          colend--
+
+          for (var i = colend; i >= colbegin; i--) matrix[rowend][i] = num++
+          rowend--
+
+          for (var i = rowend; i >= rowbegin; i--) matrix[i][colbegin] = num++
+          colbegin++
+        }
+        return matrix
+      }
+
+      console.log(matrix1(5))
+      //方法二
+
+      function matrix2(n) {
+        var start = 0
+        var result = []
+        var length = n
+        var tmp = 0
+        for (var i = 0; i < length; i++) {
+          result.push([])
+        }
+
+        while (length > start * 2) {
+          var end = length - 1 - start
+          //第一行
+          for (var i = start; i <= end; i++) {
+            result[start][i] = ++tmp
+          }
+
+          if (start < end) {
+            //由上到下
+            for (var i = start + 1; i <= end; i++) {
+              result[i][end] = ++tmp
+            }
+            //最后一行
+            for (var i = end - 1; i >= start; i--) {
+              result[end][i] = ++tmp
+            }
+          }
+          //由下到上
+          if (start < end - 1) {
+            for (var i = end - 1; i >= start + 1; i--) {
+              result[i][start] = ++tmp
+            }
+          }
+          start++
+        }
+        return result
+      }
+      console.log(matrix2(5))
+    </script>
+  </body>
+</html>

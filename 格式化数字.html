@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="number" id="num" /> <button id="regBtn">正则格式化</button
+    ><button id="btn">格式化</button>
+    <p id="res"></p>
+    <script>
+      var val = ''
+
+      num.addEventListener('input', function(e) {
+        var target = e.target
+        val = target.value
+      })
+      regBtn.addEventListener('click', function() {
+        res.innerHTML = regFormatNumber(val)
+      })
+      btn.addEventListener('click', function() {
+        res.innerHTML = formatNumber(val)
+      })
+      document.addEventListener('keyup', function(e) {
+        if (e.keyCode === 13) btn.click()
+      })
+      //每三位加','号
+      function regFormatNumber(num) {
+        var arr = num.split('.')
+        var reg = /(?=(\B)(\d{3})+$)/g
+        var result = arr[0].replace(reg, ',') + (arr[1] ? '.' + arr[1] : '')
+        console.log(result)
+        return result
+      }
+      function formatNumber(num) {
+        var result = (+num).toLocaleString()
+        console.log(result)
+        return result
+      }
+    </script>
+  </body>
+</html>

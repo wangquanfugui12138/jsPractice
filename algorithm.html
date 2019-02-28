@@ -1,117 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <script>
-        /**
-          * 数组全排列
-          */
-        
-        //时间复杂度permutate1与permutate2相同
-        function permutate1(input) {
-            var permArr = [],
-                usedChars = []
-            function main(input) {
-                var i, ch
-                for (i = 0; i < input.length; i++) {
-                    ch = input.splice(i, 1)[0]
-                    usedChars.push(ch)
-                    if (input.length == 0) {
-                        permArr.push(usedChars.slice())
-                    }
+      /**
+       * 数组全排列
+       */
 
-                    main(input)
-                    input.splice(i, 0, ch)
-                    usedChars.pop()
-                }
-                return permArr
+      //时间复杂度permutate1与permutate2相同
+      function permutate1(input) {
+        var permArr = [],
+          usedChars = []
+        function main(input) {
+          var i, ch
+          for (i = 0; i < input.length; i++) {
+            ch = input.splice(i, 1)[0]
+            usedChars.push(ch)
+            if (input.length == 0) {
+              permArr.push(usedChars.slice())
             }
-            return main(input)
+
+            main(input)
+            input.splice(i, 0, ch)
+            usedChars.pop()
+          }
+          return permArr
         }
-        
-        function permutate2(arr) {
-            if (arr.length == 1) return arr
-            else if (arr.length == 2) return [[arr[0], arr[1]], [arr[1], arr[0]]]
-            else {
-                var temp = []
-                for (var i = 0; i < arr.length; i++) {
-                    var save = arr[i]
-                    
-                    arr.splice(i, 1)//取出arr[i]
-                    
-                    var res = permutate2(arr)//递归排列arr[0],arr[1],...,arr[i-1],arr[i+1],...,arr[n]
-                    arr.splice(i, 0, save)//将arr[j]放入数组，保持原来的位置
-                    for (var j = 0; j < res.length; j++) {
-                        res[j].push(arr[i])
-                        temp.push(res[j])//将arr[j]组合起来
-                    }
-                }
-                return temp
+        return main(input)
+      }
+
+      function permutate2(arr) {
+        if (arr.length == 1) return arr
+        else if (arr.length == 2) return [[arr[0], arr[1]], [arr[1], arr[0]]]
+        else {
+          var temp = []
+          for (var i = 0; i < arr.length; i++) {
+            var save = arr[i]
+
+            arr.splice(i, 1) //取出arr[i]
+
+            var res = permutate2(arr) //递归排列arr[0],arr[1],...,arr[i-1],arr[i+1],...,arr[n]
+            arr.splice(i, 0, save) //将arr[j]放入数组，保持原来的位置
+            for (var j = 0; j < res.length; j++) {
+              res[j].push(arr[i])
+              temp.push(res[j]) //将arr[j]组合起来
             }
+          }
+          return temp
         }
-        //时间复杂度最低
-        function permutate3(str) {
-            var result=[];
-            if(str.length===1){
-                return [str]    
-            }else{
-                var preResult=permutate3(str.slice(1));
-                for (var j = 0; j < preResult.length; j++) {
-                    for (var k = 0; k < preResult[j].length+1; k++) {
-                        var temp=preResult[j].slice(0,k)+str[0]+preResult[j].slice(k)            
-                        result.push(temp)           
-                    }
-                }
-                return result
-            }     
+      }
+      //时间复杂度最低
+      function permutate3(str) {
+        var result = []
+        if (str.length === 1) {
+          return [str]
+        } else {
+          var preResult = permutate3(str.slice(1))
+          for (var j = 0; j < preResult.length; j++) {
+            for (var k = 0; k < preResult[j].length + 1; k++) {
+              var temp =
+                preResult[j].slice(0, k) + str[0] + preResult[j].slice(k)
+              result.push(temp)
+            }
+          }
+          return result
         }
-        console.time('permutate1')
-        console.dir(permutate1([5, 3, 7, 1,6,2,9,4,8]))
-        console.timeEnd('permutate1')
-        console.time('permutate2')
-        console.dir(permutate2([5, 3, 7, 1,6,2,9,4,8]))
-        console.timeEnd('permutate2')
-        console.time('permutate3')
-        console.dir(permutate3([5, 3, 7, 1,6,2,9,4,8]))
-        console.timeEnd('permutate3')
+      }
+      console.time('permutate1')
+      console.dir(permutate1([5, 3, 7, 1, 6, 2, 9, 4, 8]))
+      console.timeEnd('permutate1')
+      console.time('permutate2')
+      console.dir(permutate2([5, 3, 7, 1, 6, 2, 9, 4, 8]))
+      console.timeEnd('permutate2')
+      console.time('permutate3')
+      console.dir(permutate3([5, 3, 7, 1, 6, 2, 9, 4, 8]))
+      console.timeEnd('permutate3')
     </script>
     <script>
-        /*数组扁平化*/
-        function flatten(arr) {
-            const temp = [].concat(arr)
-            return temp.reduce((sum, cur) => {
-                return sum.concat(
-                    Object.prototype.toString.call(cur) === '[object Array]' ? flatten(cur) : cur
-                )
-            }, [])
-        }
-        console.log(flatten([/gta/g, [() => { },,[Symbol('123'),[123,'321']], 'test']]))
+      /*数组扁平化*/
+      function flatten(arr) {
+        return [].concat(arr).reduce((sum, cur) => {
+          return sum.concat(
+            Object.prototype.toString.call(cur) === '[object Array]'
+              ? flatten(cur)
+              : cur
+          )
+        }, [])
+      }
+      console.log(
+        flatten([/gta/g, [() => {}, , [Symbol('123'), [123, '321']], 'test']])
+      )
     </script>
     <script>
-        function getMost(arr) {
-            var obj = [].concat(arr).reduce(
-                (sum,cur)=>{
-                    sum[cur] ? sum[cur]++ : sum[cur] = 1
-                    return sum
-                }
-            ,{})
+      function getMost(arr) {
+        var obj = [].concat(arr).reduce((sum, cur) => {
+          sum[cur] ? sum[cur]++ : (sum[cur] = 1)
+          return sum
+        }, {})
 
-            var maxEle = Object.keys(obj)[0],
-                max = obj[Object.keys(obj)[0]]
+        var maxEle = Object.keys(obj)[0],
+          max = obj[Object.keys(obj)[0]]
 
-            Object.keys(obj).forEach(key=>{
-                max < obj[key] && (max = obj[key],maxEle = key)
-            })
-            return maxEle
-        }
-        var arr = ['a', 'c', 'd', 'a', 'f', 'e', 'c', 'f', 's', 'a', 'a', 'f', 'c', 'f', 's', 'f', 'e', 'f']
-        console.log(getMost(arr))
+        Object.keys(obj).forEach(key => {
+          max < obj[key] && ((max = obj[key]), (maxEle = key))
+        })
+        return maxEle
+      }
+      var arr = [
+        'a',
+        'c',
+        'd',
+        'a',
+        'f',
+        'e',
+        'c',
+        'f',
+        's',
+        'a',
+        'a',
+        'f',
+        'c',
+        'f',
+        's',
+        'f',
+        'e',
+        'f'
+      ]
+      console.log(getMost(arr))
     </script>
-</body>
-
+  </body>
 </html>
