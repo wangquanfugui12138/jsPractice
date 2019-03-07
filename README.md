@@ -59,3 +59,5 @@
 * [defineProperty模拟双向绑定](https://wangquanfugui12138.github.io/jsPractice/defineProperty模拟双向绑定.html)
 
 * [去抖节流](https://wangquanfugui12138.github.io/jsPractice/去抖节流.html)
+
+* [二维数组](https://wangquanfugui12138.github.io/jsPractice/二维数组.html)
