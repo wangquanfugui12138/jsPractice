@@ -63,3 +63,5 @@
 * [二维数组](https://wangquanfugui12138.github.io/jsPractice/二维数组.html)
 
 * [最长非重复子字符串](https://wangquanfugui12138.github.io/jsPractice/最长非重复子字符串.html)
+
+* [Class解析](https://wangquanfugui12138.github.io/jsPractice/Class解析.html)
