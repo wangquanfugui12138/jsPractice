@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class Person {
+      constructor(name) {//constructor为每个类的构造函数 默认为空函数
+        this.name = name //须实例化后才能调用
+        const date = new Date() //私有变量
+
+        const add = function (a, b) { return a + b } //私有函数
+        this.mul = function (a, b) { console.log(a * b) } //实例化后使用与 height函数 相同 但子类无法继承 height函数子类可以继承
+      }
+      height() {
+        console.log(1) //须实例化后才能调用
+      }
+      static weight() {//父类静态方法只能在子类静态方法中调用 相当于prototype方法
+        console.log(2)
+      }
+    }
+    class Student extends Person {
+      constructor(name, age) {
+        super() //代表父类的构造函数 显式调用是为了在子类中使用父类方法和属性并且拥有指向父类的this 如super.height() this.age
+        this.age = age
+        console.log(super.height())
+        console.log(super.mul(2, 5))//报错
+      }
+      height() {
+        super.weight()//报错
+        super.height() //父类的原型对象方法
+      }
+      static weight() {
+        super.weight() //父类静态方法
+      }
+    }
+    var s = new Student()
+    new Person().mul(2, 5)
+    s.height()//报错 静态函数不能够实例调用
+    Student.weight() 
+  </script>
+</body>
+
+</html>

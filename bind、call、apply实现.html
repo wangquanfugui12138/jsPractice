@@ -1,86 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-  </head>
 
-  <body>
-    <script>
-      function New(obj, ...args) {
-        var tmp = Object.create(obj.prototype)
-        var result = obj.apply(tmp, args)
-        // 确保 new 出来的是个对象
-        return typeof result === 'object' ? result : tmp
-      }
-      //bind
-      Function.prototype._bind = function(ctx) {
-        var _this = this,
-          preArgs = Array.prototype.slice.call(arguments, 1),
-          Fn = function() {},
-          main = function() {
-            return _this.apply(
-              ctx || window,
-              preArgs.concat(Array.prototype.slice.call(arguments))
-            )
-          }
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
 
-        Fn.prototype = this.prototype
-        main.prototype = New(Fn)
-        return main
-      }
-      var a = function(xx) {
-        console.log(this.a, xx)
-      }
-      a
-        ._bind({ a: 'bind' })
-        ._bind({ a: 111 })
-        ._bind({ a: 222 })
-        ._bind({ a: 333 })('bindArg') // bind bindArg
-      //call
-      Function.prototype._call = function(ctx) {
-        var ctx = ctx || window
-        ctx.fn = this
-
-        var args = []
-        for (var i = 1, len = arguments.length; i < len; i++) {
-          args.push('arguments[' + i + ']')
+<body>
+  <script>
+    function New(obj, ...args) {
+      var tmp = Object.create(obj.prototype)
+      var result = obj.apply(tmp, args)
+      // 确保 new 出来的是个对象
+      return typeof result === 'object' ? result : tmp
+    }
+    //bind
+    Function.prototype._bind = function (ctx) {
+      var _this = this,
+        preArgs = Array.prototype.slice.call(arguments, 1),
+        Fn = function () { },
+        main = function () {
+          return _this.apply(
+            ctx || window,
+            preArgs.concat(Array.prototype.slice.call(arguments))
+          )
         }
 
-        var result = eval('ctx.fn(' + args + ')')
+      Fn.prototype = this.prototype
+      main.prototype = New(Fn)
+      return main
+    }
+    var a = function (xx) {
+      console.log(this.a, xx)
+    }
+    a
+      ._bind({ a: 'bind' })
+      ._bind({ a: 111 })
+      ._bind({ a: 222 })
+      ._bind({ a: 333 })('bindArg') // bind bindArg
+    //call
+    Function.prototype._call = function (ctx, ...args) {
+      var ctx = ctx || window
+      ctx.fn = this
 
-        delete ctx.fn
-        return result
-      }
-      var aa = function() {
-        console.log(this.a, arguments)
-      }
-      aa._call({ a: 'call' }, 'callArg', 'callArg1')
-      //apply
-      Function.prototype._apply = function(ctx, arr) {
-        var ctx = ctx || window
-        ctx.fn = this
+      var result = ctx.fn(...args)
 
-        var result
-        if (!arr || !arr.length) {
-          result = ctx.fn()
-        }
+      delete ctx.fn
+      return result
+    }
+    var aa = function () {
+      console.log(this.a, arguments)
+    }
+    aa._call({ a: 'call' }, 'callArg', 'callArg1')
+    //apply
+    Function.prototype._apply = function (ctx, arr) {
+      if (typeof arr !== 'array') return
+      var ctx = ctx || window
+      ctx.fn = this
 
-        var args = []
-        for (var i = 0, len = arr.length; i < len; i++) {
-          args.push('arr[' + i + ']')
-        }
-        result = eval('ctx.fn(' + args + ')')
+      var result
+      if (!arr || !arr.length) result = ctx.fn()
+      else result = ctx.fn([...arr])
 
-        delete ctx.fn
-        return result
-      }
-      var aaa = function() {
-        console.log(this.a, arguments)
-      }
-      aaa._apply({ a: 'apply' }, ['applyArg', 'applyArg1'])
-    </script>
-  </body>
+      delete ctx.fn
+      return result
+    }
+    var aaa = function () {
+      console.log(this.a, arguments)
+    }
+    aaa._apply({ a: 'apply' }, ['applyArg', 'applyArg1'])
+  </script>
+</body>
+
 </html>
