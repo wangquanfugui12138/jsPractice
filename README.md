@@ -65,3 +65,5 @@
 * [最长非重复子字符串](https://wangquanfugui12138.github.io/jsPractice/最长非重复子字符串.html)
 
 * [Class解析](https://wangquanfugui12138.github.io/jsPractice/Class解析.html)
+
+* [instanceof实现](https://wangquanfugui12138.github.io/jsPractice/instanceof实现.html)
