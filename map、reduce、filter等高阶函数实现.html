@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    Array.prototype._reduce = function (fn, init) {
+      if (typeof fn !== "function") throw Error(`${fn} is not a function`)
+
+      var result = init
+      for (var i = 0, len = this.length; i < len; i++) {
+        result = fn(result, this[i], i, this)
+      }
+      return result
+    }
+    var arr = [1, 2, 3]
+    var res = arr._reduce((sum, item, index) => {
+      sum[item] = index
+      return sum
+    }, {})
+    console.log(res)
+
+    /*
+     *  reduce实现map 
+    */
+    Array.prototype._map = function (fn) {
+      if (typeof fn !== "function") throw Error(`${fn} is not a function`)
+      return this._reduce((sum, item, index, arr) => {
+        sum.push(fn(item, index, arr))
+        return sum
+      }, [])
+    }
+    var arr = [1, 2, 3]
+    var res = arr._map((item, index) => {
+      return ++item
+    })
+    console.log(res)
+
+    /*
+     *  js实现map 
+    */
+    Array.prototype._map = function (fn) {
+      if (typeof fn !== "function") throw Error(`${fn} is not a function`)
+
+      var result = []
+      for (var i = 0, len = this.length; i < len; i++) {
+        result.push(fn(this[i], i, this))
+      }
+      return result
+    }
+    var arr = [1, 2, 3]
+    var res = arr._map((item, index) => {
+      return ++item
+    })
+    console.log(res)
+
+    Array.prototype._filter = function (fn) {
+      if (typeof fn !== "function") throw Error(`${fn} is not a function`)
+
+      var result = []
+      for (var i = 0, len = this.length; i < len; i++) {
+        fn(this[i], i, this) && result.push(this[i])
+      }
+      return result
+    }
+    var arr = [1, 2, 3, 'WRQ']
+    var res = arr._filter(item => {
+      return !isNaN(item)
+    })
+    console.log(res)
+
+    Array.prototype._filter = function (fn) {
+      if (typeof fn !== "function") throw Error(`${fn} is not a function`)
+
+      return this._reduce((sum, item, index, arr) => {
+        fn(item, index, arr) && sum.push(item)
+        return sum
+      }, [])
+    }
+    var arr = [1, 2, 3, 'WRQ']
+    var res = arr._filter(item => {
+      return !isNaN(item)
+    })
+    console.log(res)
+
+    Array.prototype._every = function (fn) {
+      if (typeof fn !== "function") throw Error(`${fn} is not a function`)
+
+      for (var i = 0, len = this.length; i < len; i++) {
+        if (!fn(this[i], i, this)) return false
+      }
+      return true
+    }
+    var arr = [1, 2, 3, 'WRQ']
+    var res = arr._every(item => {
+      return !isNaN(item)
+    })
+    console.log(res)
+
+    Array.prototype._some = function (fn) {
+      if (typeof fn !== "function") throw Error(`${fn} is not a function`)
+
+      for (var i = 0, len = this.length; i < len; i++) {
+        if (fn(this[i], i, this)) return true
+      }
+      return false
+    }
+    var arr = [1, 2, 3, 'WRQ']
+    var res = arr._some(item => {
+      return !isNaN(item)
+    })
+    console.log(res)
+
+
+    Array.prototype._indexOf = function (value) {
+      for (var i = 0, len = this.length; i < len; i++) {
+        if (this[i] === value) return i
+      }
+      return -1
+    }
+    var arr = [1, 2, 3, 'WRQ']
+    console.log(arr._indexOf('-1'))
+    console.log(arr._indexOf('WRQ'))
+  </script>
+</body>
+
+</html>
