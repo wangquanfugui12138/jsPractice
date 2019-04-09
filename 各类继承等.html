@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
+
+<body>
+  <div style="display:flex;">
+    <a href="#div1">查看内容1</a>
+    <a href="#div2">查看内容2</a>
+    <a href="#div3">查看内容3</a>
+    <a href="#div4">查看内容4</a>
+  </div>
+
+  <div>
+    <div id="div1">内容1</div>
+    <div id="div2">内容2</div>
+    <div id="div3">内容3</div>
+    <div id="div4">内容4</div>
+  </div>
+  <style type="text/css">
+    #div1,
+    #div2,
+    #div3,
+    #div4 {
+      display: none;
+    }
+
+    #div1:target,
+    #div2:target,
+    #div3:target,
+    #div4:target {
+      display: block;
+    }
+  </style>
+
+  <div id="myDiv" style="background-color: lightblue;width: 0;height: 20px;line-height: 20px;transition: all .5s ease;">
+    0%
+  </div>
+  <button id="btn">run</button>
+
+  <input type="text" id="input" /> <button id="copy">copy</button>
+  <script>
+    var timer
+    // btn.onclick = function(){
+    //     clearTimeout(timer);
+    //     myDiv.style.width = '0';
+    //     timer = setTimeout(function fn(){
+    //         if(parseInt(myDiv.style.width) < 500){
+    //             myDiv.style.width = parseInt(myDiv.style.width) + 5 + 'px';
+    //             myDiv.innerHTML = parseInt(myDiv.style.width)/5 + '%';
+    //             timer = setTimeout(fn,16);
+    //         }else{
+    //             clearTimeout(timer);
+    //         }
+    //     },16);
+    // }
+    btn.onclick = function () {
+      myDiv.style.width = '0'
+      cancelAnimationFrame(timer)
+      timer = requestAnimationFrame(function fn() {
+        if (parseInt(myDiv.style.width) < 500) {
+          myDiv.style.width = parseInt(myDiv.style.width) + 5 + 'px'
+          myDiv.innerHTML = parseInt(myDiv.style.width) / 5 + '%'
+          timer = requestAnimationFrame(fn)
+        } else {
+          cancelAnimationFrame(timer)
+        }
+      })
+    }
+  </script>
+  <script>
+    document.addEventListener(
+      'DOMContentLoaded',
+      function () {
+        console.log('DOMContentLoaded succeed')
+        document.removeEventListener(
+          'DOMContentLoaded',
+          arguments.callee,
+          false
+        )
+      },
+      false
+    )
+    window.onload = function () {
+      console.log('onload succeed')
+      window.onload = null
+    }
+    function testStr(str = '') {
+      var arr = str.split('')
+      var len = arr.length
+      for (var i = 0; i < len; i++) {
+        if (arr[i] !== arr[len - i - 1]) return false
+      }
+      return true
+    }
+    console.log(testStr('%qwerewq%'))
+  </script>
+  <script>
+    //原型链继承 缺点：引用类型参数 this.name 操作一处会操作所有
+    function Parent() {
+      this.name = { a: 1 }
+    }
+    Parent.prototype.getName = function () {
+      console.log('getName')
+    }
+    function Child() { }
+    Child.prototype = new Parent()
+    var child = new Child()
+    var child1 = new Child()
+    child1.name.a = 2
+    console.log('原型链继承：')
+    console.log(child.name, child1.name)
+    console.log(child.getName, child1.getName)
+    console.log('---------------------')
+
+
+    //构造函数继承 缺点：每次创建实例都会创建一遍方法，无法继承原型链上的方法
+    function Parent1() {
+      this.name = { a: 1 }
+    }
+    Parent1.prototype.getName = function () {
+      console.log('getName')
+    }
+    function Child1() {
+      Parent1.call(this)
+    }
+    var child = new Child1()
+    var child1 = new Child1()
+    child1.name.a = 2
+    console.log('构造函数继承：')
+    console.log(child.name, child1.name)
+    console.log(child.getName, child1.getName)
+    console.log('---------------------')
+
+
+    //组合继承 缺点：会调用两次父构造函数 new Parent2() new Child2()
+    function Parent2() {
+      this.name = { a: 1 }
+    }
+    Parent2.prototype.getName = function () {
+      console.log('getName')
+    }
+    function Child2() {
+      Parent2.call(this)
+    }
+    Child2.prototype = new Parent2()
+    var child = new Child2()
+    var child1 = new Child2()
+    child1.name.a = 2
+    console.log('组合继承：')
+    console.log(child.name, child1.name)
+    console.log(child.getName, child1.getName)
+    console.log('---------------------')
+
+
+    //寄生组合继承 缺点：繁琐
+    function Parent3() {
+      this.name = { a: 1 }
+    }
+    Parent3.prototype.getName = function () {
+      console.log('getName')
+    }
+    function Child3() {
+      Parent3.call(this)
+    }
+    ; (function () {
+      // 创建一个没有实例方法的类
+      var Temp = function () { }
+      Temp.prototype = Parent3.prototype
+      //将实例作为子类的原型
+      Child3.prototype = new Temp()
+      Child3.prototype.constructor = Child3
+    })()
+
+    var child = new Child3()
+    var child1 = new Child3()
+    child1.name.a = 2
+
+    console.log('寄生组合继承')
+    console.log(child.name, child1.name)
+    console.log(child.getName, child1.getName)
+    console.log('---------------------')
+  </script>
+  <script>
+    class Promise {
+      constructor(fn) {
+        this.state = 'pending'
+        this.value = null
+        this.callbacks = []
+
+        this.handle = callback => {
+          if (this.state === 'pending') {
+            this.callbacks.push(callback)
+            return
+          }
+          var Cb =
+            this.state === 'fulfilled'
+              ? callback.onFulfilled
+              : callback.onRejected
+
+          if (!Cb) {
+            Cb =
+              this.state === 'fulfilled' ? callback.resolve : callback.reject
+            Cb(value)
+            return
+          }
+          callback.resolve(Cb(this.value))
+        }
+        this.resolve = newValue => {
+          if (
+            newValue &&
+            (typeof newValue === 'object' || typeof newValue === 'function')
+          ) {
+            var valueCb = newValue.then
+            if (typeof valueCb === 'function') {
+              valueCb.call(newValue, resolve, reject)
+              return
+            }
+          }
+          this.state = 'fulfilled'
+          this.value = newValue
+          this.execute()
+        }
+        this.reject = reason => {
+          this.state = 'rejected'
+          this.value = reason
+          this.execute()
+        }
+        this.execute = () => {
+          setTimeout(() => {
+            this.callbacks.forEach(callback => {
+              this.handle(callback)
+            })
+          }, 0)
+        }
+
+        fn(this.resolve, this.reject)
+      }
+      then(onFulfilled, onRejected) {
+        return new Promise((resolve, reject) => {
+          this.handle({
+            onFulfilled: onFulfilled || null,
+            onRejected: onRejected || null,
+            resolve,
+            reject
+          })
+        })
+      }
+    }
+    const p = function () {
+      return new Promise((res, rej) => {
+        setTimeout(() => {
+          res('Promise succeed!')
+        }, 2000)
+      })
+    }
+    p().then(value => console.log(value))
+  </script>
+  <script>
+    var text = ''
+    input.oninput = function (e) {
+      text = e.target.value
+    }
+    copy.onclick = function () {
+      input.setAttribute('value', text)
+      input.select()
+      document.execCommand('copy')
+    }
+  </script>
+</body>
+
+</html>
