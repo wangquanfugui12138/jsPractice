@@ -69,3 +69,5 @@
 * [instanceof实现](https://wangquanfugui12138.github.io/jsPractice/instanceof实现.html)
 
 * [map、reduce、filter等高阶函数实现](https://wangquanfugui12138.github.io/jsPractice/map、reduce、filter等高阶函数实现.html)
+
+* [各类继承](https://wangquanfugui12138.github.io/jsPractice/各类继承等.html)
