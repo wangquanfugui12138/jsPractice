@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var deps = {
+      dep1: function () {
+        return 'this is dep1'
+      },
+      dep2: function () {
+        return 'this is dep2'
+      },
+      dep3: function () {
+        return 'this is dep3'
+      },
+      dep4: function () {
+        return 'this is dep4'
+      }
+    }
+    var DI = function (dependency) {
+      this.dependency = dependency
+    }
+
+    DI.prototype.inject = function (func) {
+      var deps = /^[^(]+\(([^)]+)/.exec(func.toString())
+      //  构建参数绑定数组
+      deps = deps
+        ? deps[1].split(/\s?,\s?/).map(
+          function (dep) {
+            return this.dependency[dep]
+          }.bind(this)
+        )
+        : []
+
+      // 通过apply将依赖参数传入函数
+      return function () {
+        return func.apply(this, deps)
+      }
+    }
+
+    // 新建一个“注射器”
+    var di = new DI(deps)
+
+    // 注射
+    var myFunc = di.inject(function (dep3, dep1, dep2) {
+      return [dep1(), dep2(), dep3()].join(' -> ')
+    })
+    console.log(myFunc())
+
+
+
+  </script>
+  <script>
+    //实际应用
+    var ajaxs = {
+      getInfo: new Promise(res => {
+        setTimeout(() => {
+          res('info')
+        }, 4000)
+      }),
+      getData: new Promise(res => {
+        setTimeout(() => {
+          res('data')
+        }, 2000)
+      })
+    }
+    var init = function (getInfo, getData) {
+      Promise.all([getInfo, getData]).then(([info, data]) => {
+        console.log(info, data)
+      })
+    }
+    function DI(deps) {
+      this.dependency = deps
+    }
+    DI.prototype.inject = function (fn) {
+      var deps = /^[^(]+\(([^)]+)/.exec(fn.toString())
+
+      deps = deps
+        ? deps[1].split(/\s?,\s?/).map(
+          function (dep) {
+            return this.dependency[dep]
+          }.bind(this)
+        )
+        : []
+
+      // 通过apply将依赖参数传入函数
+      return function () {
+        return fn.apply(this, deps)
+      }
+    }
+    var di = new DI(ajaxs)
+
+    var injectedFn = di.inject(init)
+    injectedFn()
+  </script>
+</body>
+
+</html>
