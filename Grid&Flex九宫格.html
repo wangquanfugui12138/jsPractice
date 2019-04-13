@@ -1,0 +1,100 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        width: 500px;
+        height: 500px;
+        border: 1px solid red;
+      }
+      .wrapper div {
+        height: 150px;
+        min-width: 150px;
+        border: 1px solid silver;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+      <div>7</div>
+      <div>8</div>
+      <div>9</div>
+    </div>
+  </body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .fWrapper {
+        width: 500px;
+        height: 500px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+      }
+      .fWrapper div {
+        height: 150px;
+        min-width: 150px;
+        border: 1px solid silver;
+      }
+      .gWrapper {
+        height: 500px;
+        width: 500px;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-column-gap: 10px;
+        grid-template-rows: repeat(3, 1fr);
+        grid-row-gap: 10px;
+      }
+      .gWrapper div {
+        height: 150px;
+        min-width: 150px;
+        border: 1px solid silver;
+      }
+    </style>
+  </head>
+  <body>
+    <p>flex</p>
+    <div class="fWrapper">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+      <div>7</div>
+      <div>8</div>
+      <div>9</div>
+    </div>
+    <p>grid</p>
+    <div class="gWrapper">
+      <div>1</div>
+      <div>2</div>
+      <div>3</div>
+      <div>4</div>
+      <div>5</div>
+      <div>6</div>
+      <div>7</div>
+      <div>8</div>
+      <div>9</div>
+    </div>
+  </body>
+</html>
