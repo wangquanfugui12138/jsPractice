@@ -2,23 +2,26 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
 </head>
 
 <body>
-    <script>
-        const socket = new WebSocket('ws://localhost:8080');
-        socket.onopen = function (event) {
-            socket.send('I am the client and I\'m listening!');
-            socket.onmessage = function (event) {
-                console.log('Client received a message', event);
-            };
-            socket.onclose = function (event) {
-                console.log('Client notified socket has closed', event);
-            };  
-        };
-    </script>
+  <div id="myname"></div>
+  <script src="http://localhost:3000/socket.io/socket.io.js"></script>
+  <script>
+    var count = 0;
+    const socket = io.connect('http://localhost:3000')
+    socket.on('mynameEv', (data) => {
+      document.getElementById("myname").innerHTML = data.name;
+      console.log(data.name)
+      count++
+      socket.emit('yournameEv', { name: "飞旋" + count })
+
+    })
+  </script>
 </body>
 
 </html>
