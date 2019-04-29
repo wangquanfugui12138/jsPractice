@@ -1,64 +1,67 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
-    <meta charset="UTF-8">
-    <title></title>
+  <meta charset="UTF-8">
+  <title></title>
 </head>
+
 <body>
-<input type="text" id="input"/>
-<span>用逗号隔开</span>
-<div id="btn">
+  <input type="text" id="input" />
+  <span>用逗号隔开</span>
+  <div id="btn">
     <button id="plus">求和</button>
     <button id="unique">去重</button>
     <button id="reverse">倒序</button>
     <button id="random">乱序</button>
-</div>
-<div id="output"></div>
-<script>
-    const input=document.getElementById('input'),
-            output=document.getElementById('output'),
-            btn=document.getElementById('btn');
-    btn.addEventListener('click', e=> {
+  </div>
+  <div id="output"></div>
+  <script>
+    const input = document.getElementById('input'),
+      output = document.getElementById('output'),
+      btn = document.getElementById('btn')
+    btn.addEventListener('click', e => {
 
-        let ev=e||window.event,
-                target= ev.target|| ev.srcElement,
-            arr=input.value?input.value.split(','):(function () {
-                let newArr=[];
-                for (var i = 0; i < 100; i++) {
-                    newArr[i] = (Math.round(Math.random() * 100));
-                }
-                return newArr;
-            })();
-        switch (target.id){
-            case 'plus':
-                    output.innerHTML=arr.reduce((x,y)=>{return parseInt(x)+parseInt(y);});
-                break;
-            case 'unique':
-                    output.innerHTML= ( ()=> {
-                        let newArr=[];
-                        new Set(arr).forEach(function (el) {
-                            newArr.push(el);
-                        })
-                        return newArr
-                    })();
-                break;
-            case 'reverse':
-                    output.innerHTML=arr.reverse();
-                break;
-            case 'random':
-                    output.innerHTML=arr.sort(()=>{
-                                let rd=Math.random();
-                                if(rd>0.5)
-                                    return false;
-                                else
-                                    return true;
-                    });
-                break;
-            default :
-                break;
-        }
+      let ev = e || window.event,
+        target = ev.target || ev.srcElement,
+        arr = input.value ? input.value.split(',') : (function () {
+          let newArr = []
+          for (var i = 0; i < 100; i++) {
+            newArr[i] = (Math.round(Math.random() * 100))
+          }
+          return newArr
+        })()
+      switch (target.id) {
+        case 'plus':
+          output.innerHTML = arr.reduce((x, y) => { return parseInt(x) + parseInt(y) })
+          break
+        case 'unique':
+          output.innerHTML = (() => {
+            let newArr = []
+            new Set(arr).forEach(function (el) {
+              newArr.push(el)
+            })
+            return newArr
+          })()
+          break
+        case 'reverse':
+          output.innerHTML = arr.reverse()
+          break
+        case 'random':
+          output.innerHTML = arr.sort(() => {
+            let rd = Math.random()
+            if (rd > 0.5)
+              return false
+            else
+              return true
+          })
+          break
+        default:
+          break
+      }
     })
 
-</script>
+  </script>
 </body>
+
 </html>
