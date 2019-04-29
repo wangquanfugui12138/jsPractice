@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var tree = {
+      tagName: 'p',
+      props: {
+        'data-name': 'test2'
+      },
+      style: {
+        background: 'red',
+        height: '50px'
+      },
+      children: [
+        {
+          tagName: 'span',
+          children: [
+            {
+              tagName: 'i',
+              children: '哈哈哈哈哈'
+            }
+          ]
+        }
+      ]
+    }
+
+    function parse(tree) {
+      const { tagName, props, style, children } = tree
+      var ele = document.createElement(tagName)
+
+      for (var prop in props) {
+        ele[prop] = props[prop]
+      }
+      for (var property in style) {
+        ele.style[property] = style[property]
+      }
+      if (children && typeof children === 'object') {
+        for (var i = children.length; i--;) {
+          ele.appendChild(parse(children[i]))
+        }
+      } else {
+        children && ele.appendChild(document.createTextNode(children))
+      }
+
+      return ele
+    }
+    document.body.appendChild(parse(tree))
+  </script>
+</body>
+
+</html>
