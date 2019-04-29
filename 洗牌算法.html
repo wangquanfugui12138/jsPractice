@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<input type="text">
+<p id='result'></p>
+
+<body>
+  <script>
+    var input = document.getElementsByTagName('input')[0]
+    var result = document.getElementById('result')
+
+    input.addEventListener('input', function (e) {
+      var tmp = e.target.value.split('').shuffle()
+
+      result.innerHTML = tmp
+    })
+
+    Array.prototype.shuffle = function () {
+      var input = this
+      for (var i = input.length - 1; i >= 0; i--) {
+        var randomIndex = Math.floor(Math.random() * (i + 1))
+        var itemAtIndex = input[randomIndex]
+        input[randomIndex] = input[i]
+        input[i] = itemAtIndex
+      }
+      return input
+    }
+
+
+
+  </script>
+</body>
+
+</html>

@@ -79,3 +79,5 @@
 * [Grid圣杯布局](https://wangquanfugui12138.github.io/jsPractice/Grid圣杯布局.html)
 
 * [Flex圣杯布局](https://wangquanfugui12138.github.io/jsPractice/Flex圣杯布局.html)
+
+* [洗牌算法](https://wangquanfugui12138.github.io/jsPractice/洗牌算法.html)
