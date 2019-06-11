@@ -85,3 +85,5 @@
 * [es6快排](https://wangquanfugui12138.github.io/jsPractice/es6快排.html)
 
 * [递归渲染dom](https://wangquanfugui12138.github.io/jsPractice/递归渲染dom.html)
+
+* [最大连续子序列](https://wangquanfugui12138.github.io/jsPractice/最大连续子序列.html)

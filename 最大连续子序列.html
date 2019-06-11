@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text" id='input'
+    value="-2, 11,-2, 11,-2, 11,-2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2, 11, 11,-2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2, -4, 11,-2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2,13, 11,-2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2, -5, -2, 13, -5, -2, -4, 13, -5, -2, 11, -4,13, -5, -2, 13, -5, -2, -4,-2, 11,-2, 11,-2, 11,-2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2, 11, 11,-2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2, -4, 11,-2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2,13, 11,-2, 11, -4,13,-2, 11,-2, 11,-2, 11,-2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2, 11, 11,-2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2, -4, 11,-2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2,13, 11,-2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2, -5,-2, 11,-2, 11,-2, 11,-2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2, 11, 11,-2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2, -4, 11,-2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2,13, 11,-2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2, -5, -2, 13, -5, -2, -4, 13, -5, -2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -2, 13, -5, -2, -4, 13, -5, -2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, -5, -2, 13, -5, -2, -4, 13, -5, -2, -5, -2, 13, -5, -2, -4, 13, -5, -2, 11, -4,13, -5, -2, 13, -5, -2, -4, 13, -5, 13, -5, -2">
+  <button id='btn'>开始</button>
+  <p id='result'></p>
+  <p id='time'></p>
+  <script>
+    var input = document.getElementById('input')
+    var btn = document.getElementById('btn')
+    var result = document.getElementById('result')
+    var time = document.getElementById('time')
+
+    btn.addEventListener('click', function () {
+      var data = input.value.split(',').map(item => +item)
+      console.time('getMaxSum1')
+      var result1 = all.getMaxSum1(data)
+      console.timeEnd('getMaxSum1')
+      console.time('getMaxSum2')
+      var result2 = all.getMaxSum2(data)
+      console.timeEnd('getMaxSum2')
+      console.time('getMaxSum3')
+      var result3 = all.getMaxSum3(data)
+      console.timeEnd('getMaxSum3')
+      result.innerHTML = `
+        getMaxSum1：${result1}</br>
+        getMaxSum2：${result2}</br>
+        getMaxSum3：${result3}</br>
+      `
+    })
+
+    var all = {
+      /*解法一 遍历 O(n^2)*/
+      getMaxSum1: function (arr) {
+        var len = arr.length
+        var maxSum = 0
+        for (var i = 0; i < len; i++) {
+          var tmpSum = 0
+          for (var j = i; j < len; j++) {
+            tmpSum += arr[j]
+            if (tmpSum > maxSum) {
+              maxSum = tmpSum
+            }
+          }
+        }
+
+        return maxSum
+      },
+      /*解法二 分治算法 O(nlogn)
+       *
+       *对于任意一个序列{a1, a2, ...,am,.... an}, ( m=(n+1)/2 ) 最大的连续子序列在该序列中的位置存在三种情况:
+       *位于中间部分的左边;
+       *位于中间部分的右边 ;
+       *左边和右边都含有最大的连续子序列的一部分, e.g. ai, ..., am, ...., aj.
+       *
+       *对于情况1,2,  使用递归算法可以轻松计算出；对于情况3， 则通过求出前半部分的最大和（包含前半部分的最后一个元素）以及后半部分的最大和（包含后半部分的第一个元素）而得到，
+       *然后将这两个和加在一起， 最后，三种情况中最大的结果就是要求的结果。
+       *
+      */
+      getMaxSum2: function (arr, left = 0, right = arr.length - 1) {
+        var MaxLeftSum, MaxRightSum
+        var MaxLeftBorderSum, MaxRightBorderSum
+        var LeftBorderSum, RightBorderSum
+        var mid, i
+
+        if (left === right) // 处理只有一个元素的子序列
+        {
+          if (arr[left] > 0)
+            return arr[left];
+          else // 对于小于等于0的元素，
+            return 0;
+        }
+
+        mid = Math.floor((left + right) / 2);
+        // 情况1
+        MaxLeftSum = all.getMaxSum2(arr, left, mid);
+        // 情况2
+        MaxRightSum = all.getMaxSum2(arr, mid + 1, right);
+
+        // 情况3
+        MaxLeftBorderSum = 0;
+        LeftBorderSum = 0;
+        for (i = mid; i >= left; i--)// 求解最大序列的左边部分
+        {
+          LeftBorderSum += arr[i];
+          if (LeftBorderSum > MaxLeftBorderSum)
+            MaxLeftBorderSum = LeftBorderSum;
+        }
+
+        MaxRightBorderSum = 0;
+        RightBorderSum = 0;
+        for (i = mid + 1; i <= right; i++)// 求解最大序列的右边部分
+        {
+          RightBorderSum += arr[i];
+          if (RightBorderSum > MaxRightBorderSum)
+            MaxRightBorderSum = RightBorderSum;
+        }
+
+        return Math.max(MaxLeftSum, MaxRightSum, MaxLeftBorderSum + MaxRightBorderSum) // 返回三种情况中最大的结果
+      },
+      /*解法三 动态规划 O(n)
+       *从解法2的分治思想得到提示,可以考虑数组的第一个元素A[0], 以及和最大的一段数组(A[i], .., A[j]), A[0] 和 和最大的一段数组的关系如下：
+
+       *当0=i=j时，元素A[0]自己构成和最大的一段。
+       *当0=i<j时，元素和最大的一段数组以A[0]开头A[j]结尾。
+       *当0 < i时，元素和和最大的一段数组没有关系。
+ 
+       *因此，我们将一个大问题（具有N个元素的数组）转换成较小的问题（具有N-1个元素的数组）
+       *记 all[1] 为 A[1],...,A[N-1]中 和最大的一段数组之和
+       *记 start[1] 为 A[1], ..., A[N-1]中 以A[1]开头的和最大的一段数组之和
+       *不难发现，(A[0], A[1], ..., A[N-1]) 中和最大的一段数组的和 是 三种情况的最大值 max(A[0], A[0]+start[1],  all[1])
+      */
+      getMaxSum3: function (arr) {
+        var nStart = arr[arr.length - 1]
+        var nAll = arr[arr.length - 1]
+        for (var i = arr.length - 2; i >= 0; --i) {
+          nStart = Math.max(arr[i], arr[i] + nStart)
+          nAll = Math.max(nStart, nAll)
+        }
+        return nAll
+      }
+
+    }
+  </script>
+</body>
+
+</html>
