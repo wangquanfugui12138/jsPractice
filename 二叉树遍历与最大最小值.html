@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function Node(val, left, right) {
+      this.left = left
+      this.right = right
+      this.val = val
+    }
+    function Btr() {
+      this.root = null;
+    }
+    // D:根节点  L:左子节点  R:右子节点
+    Btr.prototype.insert = function (data) {  //生成排序的 二叉树
+      if (this.root == null) {
+        this.root = new Node(data, null, null)
+      } else {
+        var current = this.root;
+        while (true) {
+          if (data < current.val) {
+            if (current.left) {
+              current = current.left
+            } else {
+              current.left = new Node(data, null, null)
+              break
+            }
+          } else {
+            if (current.right) {
+              current = current.right
+            } else {
+              current.right = new Node(data, null, null)
+              break
+            }
+          }
+        }
+      }
+    }
+    Btr.prototype.CenterScan = function () { //中序 ( LDR)
+      var res = []
+      var root = this.root
+      var stack = []
+
+      while (stack.length || root) {
+        if (root) {
+          stack.push(root)
+          root = root.left
+
+        } else {
+          root = stack.pop()
+          res.push(root.val)
+          root = root.right
+        }
+      }
+      console.log('中序', res)
+      return res
+    }
+    Btr.prototype.FrontScan = function () { //前序 (DLR)
+      var res = []
+      var root = this.root
+      var stack = []
+
+      while (stack.length || root) {
+        if (root) {
+          res.push(root.val)
+          stack.push(root)
+          root = root.left
+
+        } else {
+          root = stack.pop()
+          root = root.right
+        }
+      }
+      console.log('前序', res)
+      return res
+    }
+    Btr.prototype.BackScan = function () {  //后序 (LRD)
+      var res = []
+      var root = this.root
+      var stack = []
+      var lastNode
+
+      while (stack.length || root) {
+        if (root) {
+          stack.push(root)
+          root = root.left
+        } else {
+          root = stack[stack.length - 1]
+
+          if (root.right && root.right !== lastNode) {
+            root = root.right
+          } else {
+            stack.pop()
+            res.push(root.val)
+            lastNode = root
+            root = null
+          }
+        }
+      }
+      console.log('后序', res)
+      return res
+    }
+    Btr.prototype.Max = function () {
+      var root = this.root, right
+      while (root) {
+        root.right && (right = root.right)
+        root = root.right
+      }
+      console.log('最大值', right.val)
+    }
+    Btr.prototype.Min = function () {
+      console.log(this.root)
+      var root = this.root, left
+      while (root) {
+        root.left && (left = root.left)
+        root = root.left
+      }
+      console.log('最小值', left.val)
+    }
+    var btr = new Btr()
+    btr.insert(6)
+    btr.insert(12)
+    btr.insert(1)
+    btr.insert(14)
+    btr.insert(3)
+    btr.insert(15)
+    btr.insert(19)
+    btr.insert(18)
+    btr.insert(0)
+    btr.CenterScan()
+    btr.FrontScan()
+    btr.BackScan()
+    btr.Max()
+    btr.Min()
+  </script>
+</body>
+
+</html>

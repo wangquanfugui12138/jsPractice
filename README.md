@@ -87,3 +87,9 @@
 * [递归渲染dom](https://wangquanfugui12138.github.io/jsPractice/递归渲染dom.html)
 
 * [最大连续子序列](https://wangquanfugui12138.github.io/jsPractice/最大连续子序列.html)
+
+* [渐变背景色](https://wangquanfugui12138.github.io/jsPractice/渐变背景色.html)
+
+* [生成二叉树](https://wangquanfugui12138.github.io/jsPractice/生成二叉树.html)
+
+* [二叉树遍历与最大最小值](https://wangquanfugui12138.github.io/jsPractice/二叉树遍历与最大最小值.html)

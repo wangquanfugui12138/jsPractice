@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<input type="text" id='input' value="-10, -3, 0, 5, 9">
+<button id='btn'>traversal</button>
+<p id='result'></p>
+
+<body>
+  <script>
+    var input = document.getElementById('input')
+    var btn = document.getElementById('btn')
+    var result = document.getElementById('result')
+
+    btn.addEventListener('click', function () {
+      var text = input.value.split(',').map(item => +item)
+      var res = JSON.stringify(array2Tree(text))
+      result.innerHTML = res
+      console.log(JSON.parse(res))
+    })
+
+    function TreeNode(val) {
+      this.value = val
+    }
+
+    var array2Tree = function (nums) {
+      if (nums.length === 0) return null
+
+      if (nums.length === 1) return new TreeNode(nums[0])
+
+      var mid = parseInt(nums.length / 2)
+      var root = new TreeNode(nums[mid])
+
+      root.left = array2Tree(nums.slice(0, mid))
+      root.right = array2Tree(nums.slice(mid + 1))
+
+      return root
+    }
+
+  </script>
+</body>
+
+</html>
