@@ -92,4 +92,4 @@
 
 * [生成二叉树](https://wangquanfugui12138.github.io/jsPractice/生成二叉树.html)
 
-* [二叉树遍历与最大最小值](https://wangquanfugui12138.github.io/jsPractice/二叉树遍历与最大最小值.html)
+* [二叉搜索树遍历与最大最小值](https://wangquanfugui12138.github.io/jsPractice/二叉搜索树遍历与最大最小值.html)
