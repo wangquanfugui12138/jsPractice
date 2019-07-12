@@ -2,46 +2,88 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
 </head>
 
 <body>
-        <input type="text" id='arr'>
-        <input type="text" id='value'>
-        <button id='search'>查找</button>
-        <p id='res'></p>
-    <script>
-        var input = document.getElementById('arr'),
-            value = document.getElementById('value'),
-            res = document.getElementById('res')
+  <input type="text" id='arr'>
+  <input type="text" id='value'>
+  <button id='search'>查找</button>
+  <p id='res'></p>
+  <script>
+    var input = document.getElementById('arr'),
+      value = document.getElementById('value'),
+      res = document.getElementById('res')
 
-        function bsearch(arr, val) {
-            var arr =[].concat(arr),
-                low = 0,
-                high = arr.length - 1
+    function bsearch(arr, val) {
+      var arr = [].concat(arr),
+        low = 0,
+        high = arr.length - 1
 
-            while(low <= high){
-                var mid = Math.floor(low + (high - low) / 2)//防止high+low超出上限
+      while (low <= high) {
+        var mid = Math.floor(low + (high - low) / 2)//防止high+low超出上限
 
-                if(val === arr[mid]){
-                    return  mid
-                }else if(val > arr[mid]){
-                    low = mid + 1
-                }else if(val < arr[mid]){
-                    high = mid -1
-                }
-            }
-            return -1
+        if (val === arr[mid]) {
+          return mid
+        } else if (val > arr[mid]) {
+          low = mid + 1
+        } else if (val < arr[mid]) {
+          high = mid - 1
         }
-        search.onclick=function(){
-            var arr = input.value.split('')
-            var text = bsearch(arr,value.value)
-            res.innerText=text
+      }
+      return -1
+    }
+    //二分查找最左侧的索引
+    function searchLeft(nums, target) {
+      var low = 0
+      var high = nums.length
+
+      while (low < high) {
+        var mid = Math.floor(low + (high - low) / 2)
+
+        if (nums[mid] === target) {
+          high = mid
+        } else if (nums[mid] > target) {
+          high = mid
+        } else if (nums[mid] < target) {
+          low = mid + 1
         }
-    </script>
+      }
+      // target 比所有数都大
+      if (low === nums.length) return -1
+      //target 比所有都小
+      if (nums[low] !== target) return -1
+
+      return low
+    }
+    //二分查找最右侧的索引
+    function searchRight(nums, target) {
+      var low = 0
+      var high = nums.length
+
+      while (low < high) {
+        var mid = Math.floor(low + (high - low) / 2)
+
+        if (nums[mid] === target) {
+          low = mid + 1
+        } else if (nums[mid] > target) {
+          high = mid
+        } else if (nums[mid] < target) {
+          low = mid + 1
+        }
+      }
+
+      return high - 1
+    }
+    search.onclick = function () {
+      var arr = input.value.split('')
+      var text = bsearch(arr, value.value)
+      res.innerText = text
+    }
+  </script>
 </body>
 
 </html>
