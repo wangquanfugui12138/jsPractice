@@ -93,3 +93,5 @@
 * [生成二叉树](https://wangquanfugui12138.github.io/routinePractice/生成二叉树.html)
 
 * [二叉搜索树遍历与最大最小值](https://wangquanfugui12138.github.io/routinePractice/二叉搜索树遍历与最大最小值.html)
+
+* [数组转树形](https://wangquanfugui12138.github.io/routinePractice/数组转树形.html)

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+
+    var len = 10000
+    var data = new Array(len).fill('').map((item, index) => {
+      var pid = Math.random() >= 0.5 ? Math.floor((Math.random() * len + 1)) : 0
+      return {
+        id: index + 1,
+        name: `第${index + 1}级菜单`,
+        pid
+      }
+    })
+    console.log(data)
+    function transform1(data) {
+      console.time('transform1')
+
+      var map = {}
+
+      data.forEach(item => map[item.id] = item)
+
+      data.forEach(item => map[item.pid] && (map[item.pid].children || (map[item.pid].children = [])).push(item))
+
+      var res = data.filter(item => !item.pid)
+      console.log(res)
+      console.timeEnd('transform1')
+    }
+    function transform2(data) {
+      console.time('transform2')
+
+      var parents = [], children = []
+      data.forEach(item => item.pid ? children.push({ ...item }) : parents.push({ ...item }))
+
+      function main(parents, children) {
+        for (var i = 0; i < parents.length; i++) {
+          for (var j = 0; j < children.length; j++) {
+            if (children[j].pid === parents[i].id) {
+              (parents[i].children || (parents[i].children = [])).push(children[j])
+              main(parents[i], [...children.slice(0, j), ...children.slice(j + 1)])
+            }
+          }
+        }
+        return parents
+      }
+
+      var res = main(parents, children)
+
+      console.log(res)
+      console.timeEnd('transform2')
+    }
+    transform1(data)
+    transform2(data)
+  </script>
+</body>
+
+</html>
