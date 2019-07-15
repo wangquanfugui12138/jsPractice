@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function shell(arr) {
+      for (var gap = Math.floor(arr.length / 2); gap > 0; gap = Math.floor(gap / 2)) {
+        for (var i = gap; i < arr.length; i++) {
+          for (var j = i; j > 0; j -= gap) {
+            if (arr[j - gap] >= arr[j]) [arr[j - gap], arr[j]] = [arr[j], arr[j - gap]]
+          }
+
+        }
+      }
+      return arr
+    }
+    shell([2, 1, 3, 5, 4])  
+  </script>
+</body>
+
+</html>
