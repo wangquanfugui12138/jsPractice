@@ -2,48 +2,60 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Document</title>
 </head>
+
 <body>
 </body>
 <script>
-    function quickSort(arr){
-        if(arr.length <=1) return arr
-        let mid_index=Math.floor(arr.length/2),
-            mid_value=arr.splice(mid_index,1),
-            left=[],right=[]
-        for(let i=0;i<arr.length;i++){
-            arr[i] > mid_value ?
-                right.push(arr[i]) :
-                left.push(arr[i])
-        }
-        return quickSort(left).concat(mid_value,quickSort(right))
+  function quickSort(arr) {
+    if (arr.length <= 1) return arr
+    let mid_index = Math.floor(arr.length / 2),
+      mid_value = arr.splice(mid_index, 1),
+      left = [], right = []
+    for (let i = 0; i < arr.length; i++) {
+      arr[i] > mid_value ?
+        right.push(arr[i]) :
+        left.push(arr[i])
     }
-    console.log(quickSort([9,5,7,5,1,5,12]))
-    
-    function deepClone(obj,result){
-        Object.keys(obj).forEach(key=>{
-            Object.prototype.toString.call(obj[key])==='[object Object]'?
-                (
-                    result[key]=Object.assign({},obj[key]),
-                    deepClone(obj[key],result[key])
-                ) : result[key]=obj[key]
-        })
-        return result
-    }
-    var a={
-        b:{
-            c:1              
-        },
-        ex:/[0-9]{1}\|[a-z]*?/g,
-        fn:()=>console.log('123'),
-        m:Symbol('new')
-    }
-    var aa={}
-    deepClone(a,aa)
-    console.log(a,aa)
-    a.b.c=2
-    console.log(a,aa)
+    return quickSort(left).concat(mid_value, quickSort(right))
+  }
+  console.log(quickSort([9, 5, 7, 5, 1, 5, 12]))
+
+  function deepClone(target) {
+    var res = Object.prototype.toString.call(target) === '[object Object]' ? {} : []
+    Object.keys(target).forEach(key => {
+      if (typeof target[key] !== 'object' || Object.prototype.toString.call(target[key]) === '[object RegExp]' || target[key] === null) {
+        res[key] = target[key]
+      } else {
+        res[key] = deepClone(target[key])
+      }
+    })
+    return res
+  }
+  var a = {
+    b: {
+      c: 1
+    },
+    ex: /[0-9]{1}\|[a-z]*?/g,
+    fn: () => console.log('123'),
+    m: Symbol('new'),
+    n: null,
+    u: undefined
+  }
+  var aa = deepClone(a)
+
+  console.log(a, aa)
+  aa.b.c = 2
+  console.log(a, aa)
+
+  var b = [1, 2, 3, [4, 5, [null, undefined, /[0-9]{1}\|[a-z]*?/g, () => console.log('123'), Symbol('new')]]]
+  var bb = deepClone(b)
+  console.log(b, bb)
+  bb[3][0] = 111
+  console.log(b, bb)
+
 </script>
+
 </html>

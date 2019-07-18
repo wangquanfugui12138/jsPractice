@@ -23,11 +23,10 @@
 
     Array.prototype.shuffle = function () {
       var input = this
+      if (Object.prototype.toString.call(input) === '[object Array]') return
       for (var i = input.length - 1; i >= 0; i--) {
         var randomIndex = Math.floor(Math.random() * (i + 1))
-        var itemAtIndex = input[randomIndex]
-        input[randomIndex] = input[i]
-        input[i] = itemAtIndex
+        [input[randomIndex], input[i]] = [input[i], input[randomIndex]]
       }
       return input
     }
