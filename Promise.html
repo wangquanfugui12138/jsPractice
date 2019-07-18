@@ -3,195 +3,168 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Promise</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
 </head>
 
 <body>
   <script>
-    function Promise(fn) {
-      var state = 'pending',
-        value = null,
-        callbacks = []
+    //es6写法
+    class Promise1 {
+      constructor(fn) {
+        this.status = 'pending'
+        this.value = ''
+        this.reason = ''
+        this.resCbs = []
+        this.rejCbs = []
 
-      this.then = function (onFulfilled, onRejected) {
-        return new Promise(function (resolve, reject) {
-          handle({
-            onFulfilled: onFulfilled || null,
-            onRejected: onRejected || null,
-            resolve: resolve,
-            reject: reject
+        var resolve = value => {
+          setTimeout(() => {
+            if (this.status === 'pending') {
+              this.status === 'fulfilled'
+              this.value = value
+              this.resCbs.forEach(cb => cb(value))
+            }
           })
-        })
-      }
-
-      function handle(callback) {
-        if (state === 'pending') {
-          callbacks.push(callback)
-          return
+        }
+        var reject = reason => {
+          setTimeout(() => {
+            if (this.status === 'pending') {
+              this.status = 'rejected'
+              this.reason = reason
+              this.rejCbs.forEach(cb => cb(reason))
+            }
+          })
         }
 
-        var cb = state === 'fulfilled' ? callback.onFulfilled : callback.onRejected,
-          ret
-        if (cb === null) {
-          cb = state === 'fulfilled' ? callback.resolve : callback.reject
-          cb(value)
-          return
+        try {
+          fn(resolve)
+        } catch (err) {
+          reject(err)
         }
-        ret = cb(value)
-        callback.resolve(ret)
       }
+      then(resFn, rejFn) {
+        return new Promise1((resolve, reject) => {
+          var res = () => {
+            var tmp = typeof resFn === 'function' && resFn(this.value) || this.value
 
-      function resolve(newValue) {
-        if (newValue && (typeof newValue === 'object' || typeof newValue === 'function')) {
-          var then = newValue.then
-          if (typeof then === 'function') {
-            then.call(newValue, resolve, reject)
-            return
+            if (tmp && typeof tmp.then === 'function') {
+              tmp.then((value) => resolve(value))
+            } else {
+              resolve(this.value)
+            }
           }
-        }
-        state = 'fulfilled'
-        value = newValue
-        execute()
+          var rej = () => {
+            var tmp = typeof rejFn === 'function' && rejFn(this.reason) || this.reason
+            reject(this.reason)
+          }
+          if (this.status === 'fulfilled') {
+            res(this.value)
+          } else if (this.status === 'rejected') {
+            rej(this.reason)
+          } else if (this.status === 'pending') {
+
+            this.resCbs.push(res)
+            this.rejCbs.push(rej)
+          }
+        })
+
       }
 
-      function reject(reason) {
-        state = 'rejected'
-        value = reason
-        execute()
+    }
+    var p = new Promise1((resolve, reject) => {
+      setTimeout(() => {
+        resolve(111);
+      }, 1000)
+    });
+
+    p.then(data => {
+      console.log(data);
+      return new Promise1((resolve, reject) => {    //then 方法返回的是一个promise对象，故执行 promise中的then注册该结果，在resolve
+        setTimeout(() => { resolve(222); }, 1000)
+      })
+    }).then(data => {
+      console.log(data);
+    })
+
+  </script>
+
+  <script>
+    //es5写法
+    function Promise(fn) {
+      var data = undefined, reason = undefined;
+      var succallbacks = [];
+      var failcallbacks = [];
+      var status = "pending";
+      this.then = function (fulfilled, rejected) {
+        return new Promise(function (resolve, reject) {    //返回一个新的promise
+          function suc(value) {   //成功
+            var ret = typeof fulfilled === 'function' && fulfilled(value) || value;
+            if (ret && typeof ret['then'] === 'function') {    //判断 then中的 返回的是否是promise对象，如果是注册then方法
+              ret.then(function (value) {
+                resolve(value);
+              });
+            } else {
+              resolve(ret);
+            }
+          }
+          function errback(reason) {  //失败
+            reason = typeof rejected === 'function' && rejected(reason) || reason;
+            reject(reason);
+          }
+
+          if (status === 'pending') {
+            succallbacks.push(suc);
+            failcallbacks.push(errback);
+          } else if (status === 'fulfilled') {
+            suc(data);
+          } else {
+            errback(reason);
+          }
+        })
+
       }
 
-      function execute() {
-        setTimeout(function () {
-          callbacks.forEach(function (callback) {
-            handle(callback)
+      function resolve(value) {
+        setTimeout(function () {   //加入延时
+          status = "fulfilled";
+          data = value;
+          succallbacks.forEach((callback) => {
+            callback(value);
           })
+        }, 0)
+
+      }
+
+      function reject(value) {
+        setTimeout(function () {
+          status = "rejected";
+          reason = value;
+          failcallbacks.forEach((callback) => {
+            callback(value);
+          })
+
         }, 0)
       }
 
-      fn(resolve, reject)
+      fn(resolve, reject);
     }
-    const p = function () {
-      return new Promise((res, rej) => {
-        setTimeout(() => {
-          document.write('<div style="color:red">Promise succeed!</div>')
-          res('Promise succeed!')
-        }, 2000)
+
+    var p = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve(1);
+      }, 1000)
+    });
+
+    p.then(data => {
+      console.log(data);
+      return new Promise((resolve, reject) => {    //then 方法返回的是一个promise对象，故执行 promise中的then注册该结果，在resolve
+        setTimeout(() => { resolve(2); }, 1000)
       })
-    }
-    function test() {
-      const r = p().then(r => console.log(r))
-
-    }
-    test()
-    console.log('hahahhahahahah')
-  </script>
-  <script>
-    class Promise {
-      constructor(fn) {
-        this.state = 'pending'
-        this.value = undefined
-        this.reason = undefined
-        // 成功方法数组
-        this.onResolvedCallbacks = []
-        // 失败方法数组
-        this.onRejectedCallbacks = []
-        let resolve = value => {
-          if (value instanceof Promise) {
-            return value.then(resolve, reject);
-          }
-          // 实践中要确保 onFulfilled 和 onRejected 方法异步执行，且应该在 then 方法被调用的那一轮事件循环之后的新执行栈中执行。
-          setTimeout(() => {
-            if (this.state === 'pending') {
-              this.state = 'fulfilled'
-              this.value = value
-              this.onResolvedCallbacks.forEach(cb => cb(this.value))
-            }
-          })
-
-        }
-        let reject = reason => {
-          setTimeout(() => {
-            if (this.state === 'pending') {
-              this.state = 'rejected'
-              this.reason = reason
-              this.onRejectedCallbacks.forEach(cb => cb(this.reason))
-            }
-          })
-
-        }
-        try {
-          fn(resolve, reject)
-        } catch (err) {
-          reject(err)
-        }
-      }
-      then(onFulfilled, onRejected) {
-        if (this.state === 'fulfilled') {
-          onFulfilled(this.value)
-        }
-        if (this.state === 'rejected') {
-          onRejected(this.reason)
-        }
-        if (this.state === 'pending') {
-          this.onResolvedCallbacks.push(() => {
-            onFulfilled(this.value)
-          })
-          this.onRejectedCallbacks.push(() => {
-            onRejected(this.reason)
-          })
-        }
-      }
-    }
-
-    const p = function () {
-      return new Promise((res, rej) => {
-        setTimeout(() => {
-          document.body.innerHTML = '<div style="color:red">Promise succeed!</div>'
-          res('Promise succeed!')
-        }, 2000)
-      })
-    }
-    p().then(val => console.log(val))
-  </script>
-  <script>
-    class Promise1 {
-      constructor(fn) {
-        this.state = 'pending'
-        this.value = ''
-        this.reason = ''
-
-        this.resolvedCb = []
-        this.rejectedCb = []
-
-        function resolve(value) {
-          if (this.state !== 'pending') return
-          this.state = 'fulfilled'
-          this.value = value
-          this.resolvedCb.forEach(cb => cb())
-        }
-        function reject(reason) {
-          if (this.state !== 'pending') return
-          this.state = 'rejected'
-          this.reason = reason
-          this.rejectedCb.forEach(cb => cb())
-        }
-        try {
-          fn(resolve, reject)
-        } catch (err) {
-          reject(err)
-        }
-      }
-      then(resCb, rejCb) {
-        if (this.state === 'fulfilled') {
-          resCb(this.value)
-        } else if (this.state === 'rejected') {
-          rejCb(this.reason)
-        } else if (this.state === 'pending') {
-          this.resolvedCb.push(resCb)
-          this.rejectedCb.push(rejCb)
-        }
-      }
-    }
+    }).then(data => {
+      console.log(data);
+    })
   </script>
 </body>
 
