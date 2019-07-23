@@ -19,50 +19,52 @@
         this.resCbs = []
         this.rejCbs = []
 
-        var resolve = value => {
-          setTimeout(() => {
-            if (this.status === 'pending') {
-              this.status === 'fulfilled'
-              this.value = value
-              this.resCbs.forEach(cb => cb(value))
-            }
-          })
-        }
-        var reject = reason => {
-          setTimeout(() => {
-            if (this.status === 'pending') {
-              this.status = 'rejected'
-              this.reason = reason
-              this.rejCbs.forEach(cb => cb(reason))
-            }
-          })
-        }
+        this.resolve = this.resolve.bind(this)
+        this.reject = this.reject.bind(this)
 
         try {
-          fn(resolve)
+          fn(this.resolve, this.reject)
         } catch (err) {
-          reject(err)
+          this.reject(err)
         }
+      }
+      resolve(value) {
+        setTimeout(() => {
+          if (this.status === 'pending') {
+            this.status === 'fulfilled'
+            this.value = value
+            this.resCbs.forEach(cb => cb(value))
+          }
+        })
+      }
+      reject(reason) {
+        setTimeout(() => {
+          if (this.status === 'pending') {
+            this.status = 'rejected'
+            this.reason = reason
+            this.rejCbs.forEach(cb => cb(reason))
+          }
+        })
       }
       then(resFn, rejFn) {
         return new Promise1((resolve, reject) => {
           var res = () => {
-            var tmp = typeof resFn === 'function' && resFn(this.value) || this.value
+            var result = typeof resFn === 'function' && resFn(this.value) || this.value
 
-            if (tmp && typeof tmp.then === 'function') {
-              tmp.then((value) => resolve(value))
+            if (result && result instanceof Promise1) {
+              result.then(resolve, reject)
             } else {
-              resolve(this.value)
+              resolve(result)
             }
           }
           var rej = () => {
-            var tmp = typeof rejFn === 'function' && rejFn(this.reason) || this.reason
-            reject(this.reason)
+            var result = typeof rejFn === 'function' && rejFn(this.reason) || this.reason
+            reject(result)
           }
           if (this.status === 'fulfilled') {
-            res(this.value)
+            res()
           } else if (this.status === 'rejected') {
-            rej(this.reason)
+            rej()
           } else if (this.status === 'pending') {
 
             this.resCbs.push(res)
