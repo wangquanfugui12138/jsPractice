@@ -39,7 +39,7 @@
         }
 
         try {
-          fn(resolve)
+          fn(resolve,reject)
         } catch (err) {
           reject(err)
         }
@@ -49,7 +49,7 @@
           var res = () => {
             var tmp = typeof resFn === 'function' && resFn(this.value) || this.value
 
-            if (tmp && typeof tmp.then === 'function') {
+            if (tmp && tmp instanceof Promise1 ) {
               tmp.then((value) => resolve(value))
             } else {
               resolve(this.value)

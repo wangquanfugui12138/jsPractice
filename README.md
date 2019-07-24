@@ -99,3 +99,5 @@
 * [CSS晴雨雪天气](https://wangquanfugui12138.github.io/routinePractice/CSS晴雨雪天气.html)
 
 * [希尔排序](https://wangquanfugui12138.github.io/routinePractice/希尔排序.html)
+
+* [异步并发控制](https://wangquanfugui12138.github.io/routinePractice/异步并发控制.html)
