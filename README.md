@@ -99,3 +99,5 @@
 * [CSS晴雨雪天气](https://wangquanfugui12138.github.io/routinePractice/CSS晴雨雪天气.html)
 
 * [希尔排序](https://wangquanfugui12138.github.io/routinePractice/希尔排序.html)
+
+* [EventEmitter](https://wangquanfugui12138.github.io/routinePractice/EventEmitter.html)
