@@ -100,4 +100,8 @@
 
 * [希尔排序](https://wangquanfugui12138.github.io/routinePractice/希尔排序.html)
 
+<<<<<<< HEAD
 * [EventEmitter](https://wangquanfugui12138.github.io/routinePractice/EventEmitter.html)
+=======
+* [异步并发控制](https://wangquanfugui12138.github.io/routinePractice/异步并发控制.html)
+>>>>>>> 291e23013dcd771a0c0c99b192468322054f8b67
