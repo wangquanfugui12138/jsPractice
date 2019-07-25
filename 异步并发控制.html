@@ -2,53 +2,92 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
 </head>
 
 <body>
-    <script>
-        class Scheduler {
-            constructor(max = 2) {
-                this.limit = max
-                this.running = 0
-                this.waiting = []
-            }
+  <script>
+    class Scheduler {
+      constructor(max = 2) {
+        this.limit = max
+        this.running = 0
+        this.waiting = []
+      }
 
-            add(promiseCreator) {
-                return new Promise(resolve => {
-                    this.waiting.push({ "key": promiseCreator, "resolve": resolve })
-                    if (this.running < this.limit) {
-                        this.running++;
-                        if (this.waiting.length > 0) {
-                            let tmp = this.waiting.shift()
-                            tmp["key"]().then(() => {
-                                tmp["resolve"]()
-                                this.running--
-                                this.add(tmp["key"])
-                            })
-                        }
-                    }
-                })
+      add(promiseCreator) {
+        return new Promise(resolve => {
+          this.waiting.push({ "key": promiseCreator, "resolve": resolve })
+          if (this.running < this.limit) {
+            this.running++;
+            if (this.waiting.length > 0) {
+              let tmp = this.waiting.shift()
+              tmp["key"]().then(() => {
+                tmp["resolve"]()
+                this.running--
+                this.add(tmp["key"])
+              })
             }
-        }
-        const timeout = (time) => new Promise(resolve => {
-            setTimeout(resolve, time)
+          }
         })
+      }
+    }
+    const timeout = (time) => new Promise(resolve => {
+      setTimeout(resolve, time)
+    })
 
-        const scheduler = new Scheduler()
-        const addTask = (time, order) => {
-            scheduler.add(() => timeout(time))
-                .then(() => console.log(order))
+    const scheduler = new Scheduler()
+    const addTask = (time, order) => {
+      scheduler.add(() => timeout(time))
+        .then(() => console.log(order))
+    }
+
+    addTask(1000, '1')
+    addTask(500, '2')
+    addTask(300, '3')
+    addTask(400, '4')    
+  </script>
+  <script>
+    class Scheduler1 {
+      constructor(max) {
+        this.arr = new Array(max).fill(null)
+      }
+
+      add(promiseCreator) {
+
+        // Has empty spot for execution 
+        for (let i = 0; i < this.arr.length; i++) {
+          if (this.arr[i] === null) {
+            this.arr[i] = promiseCreator().then(() => {
+              this.arr[i] = null
+            })
+            return this.arr[i]
+          }
         }
 
-        addTask(1000, '1')
-        addTask(500, '2')
-        addTask(300, '3')
-        addTask(400, '4')    
-    </script>
+        // No spot for execution 
+        return Promise.race(this.arr).then(() => {
+          return this.add(promiseCreator)
+        })
+      }
+    }
+    const timeout1 = (time) => new Promise(resolve => {
+      setTimeout(resolve, time)
+    })
+
+    const scheduler1 = new Scheduler1(3)
+    const addTask1 = (time, order) => {
+      scheduler1.add(() => timeout(time))
+        .then(() => console.log(order))
+    }
+
+    addTask1(1000, '11')
+    addTask1(500, '22')
+    addTask1(300, '33')
+    addTask1(400, '44')   
+  </script>
 </body>
 
 </html>
